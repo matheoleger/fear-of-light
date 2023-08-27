@@ -10,8 +10,9 @@ config_version=5
 
 [application]
 
-config/name="Fear of Light"
-config/features=PackedStringArray("4.1", "Forward Plus")
+config/name="Fear Of Light"
+run/main_scene="res://Scenes/TestScene.tscn"
+config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
