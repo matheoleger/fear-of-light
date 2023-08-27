@@ -3,16 +3,20 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	public const float Speed = 300.0f;
+	public const float Speed = 250.0f;
+	public const float DashSpeed = 20.0f;
+	private bool canDash = true;
 
 	private AnimatedSprite2D _animatedSprite;
+	private Timer _dashCooldownTimer;
 
 	private Vector2 previousDirection;
 
     public override void _Ready()
     {
         _animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-    }
+		_dashCooldownTimer = GetNode<Timer>("DashCooldownTimer");
+    }   
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -27,10 +31,26 @@ public partial class Player : CharacterBody2D
 		velocity.X = direction.X * Speed;
 		velocity.Y = direction.Y * Speed;
 
-		previousDirection = direction;
+		if(direction != Vector2.Zero) previousDirection = direction;
+
+		if (Input.IsActionPressed("dash") && canDash)
+    	{
+			GD.Print("DAAAASH");
+			canDash = false;
+			_dashCooldownTimer.Start();
+
+			velocity.X = previousDirection.X * Speed * DashSpeed;
+			velocity.Y = previousDirection.Y * Speed * DashSpeed; //Find a way to move smoothly
+		}
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	public void _OnDashCooldownTimeout()
+	{
+		canDash = true;
+		GD.Print("you can DAAAASH now ;)");
 	}
 
 	private void HandleAnimation(Vector2 currentDirection) 
@@ -52,16 +72,16 @@ public partial class Player : CharacterBody2D
 
 		if(currentDirection != Vector2.Zero) return;
 		
-		if(lastDirection == Vector2.Down)
+		if(previousDirection == Vector2.Down)
 		{
 			_animatedSprite.Play("idle-down");
-		} else if(lastDirection == Vector2.Up)
+		} else if(previousDirection == Vector2.Up)
 		{
 			_animatedSprite.Play("idle-top");
-		} else if(lastDirection == Vector2.Left)
+		} else if(previousDirection == Vector2.Left)
 		{
 			_animatedSprite.Play("idle-left");
-		} else if(lastDirection == Vector2.Right)
+		} else if(previousDirection == Vector2.Right)
 		{
 			_animatedSprite.Play("idle-right");
 		}

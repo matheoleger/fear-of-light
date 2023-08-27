@@ -1,3 +1,4 @@
 {
-    "dotnet.defaultSolution": "Fear of Light.sln"
+    "dotnet.defaultSolution": "Fear of Light.sln",
+    "dotnet.server.useOmnisharp": true
 }
