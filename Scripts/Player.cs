@@ -3,12 +3,13 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	private const float MaxSpeed = 250.0f;
+	private const float MaxSpeed = 200.0f;
 	private const float DashSpeed = 600.0f; 
 	private const float Friction = 1200.0f;
-	private const float Acceleration = 250.0f;
+	private const float Acceleration = 1500.0f;
 
 	private bool canDash = true;
+	private bool isDashing = false;
 
 	private AnimatedSprite2D _animatedSprite;
 	private Timer _dashCooldownTimer;
@@ -23,26 +24,22 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
-
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
 
 		HandleAnimation(direction);
 
 		if(direction != Vector2.Zero) previousDirection = direction;
 
-		if (Input.IsActionPressed("dash") && canDash)
-    	{
-			GD.Print("DAAAASH");
+		HandleDash();
 
-			// speed = 1000.0f;
+		float maxSpeed = isDashing ? DashSpeed : MaxSpeed;
 
-			canDash = false;
-			_dashCooldownTimer.Start();
+		MovePlayer(direction, Acceleration, maxSpeed, (float)delta);
+	}
 
-		}
+	private void MovePlayer(Vector2 direction, float acceleration, float maxSpeed, float delta)
+	{
+		Vector2 velocity = Velocity;
 
 		//Smooth movement
 		if(direction == Vector2.Zero) 
@@ -56,17 +53,30 @@ public partial class Player : CharacterBody2D
 			}
 		} else 
 		{
-			velocity += direction * Acceleration * (float)delta;
-			velocity = velocity.LimitLength(MaxSpeed);
+			velocity += direction * acceleration * (float)delta;
+			velocity = velocity.LimitLength(maxSpeed);
 		}
 		
 		Velocity = velocity;
 		MoveAndSlide();
 	}
 
+	private void HandleDash()
+	{
+		if(Input.IsActionPressed("dash") && canDash)
+    	{
+			GD.Print("DAAAASH");
+
+			canDash = false;
+			isDashing = true;
+			_dashCooldownTimer.Start();
+		}
+	}
+
 	public void _OnDashCooldownTimeout()
 	{
 		canDash = true;
+		isDashing = false;
 		GD.Print("you can DAAAASH now ;)");
 	}
 
