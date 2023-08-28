@@ -3,12 +3,16 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	public const float Speed = 250.0f;
-	public const float DashSpeed = 20.0f;
-	private bool canDash = true;
-
 	private AnimatedSprite2D _animatedSprite;
 	private Timer _dashCooldownTimer;
+
+	private const float MaxSpeed = 200.0f;
+	private const float DashSpeed = 600.0f; 
+	private const float Friction = 1200.0f;
+	private const float Acceleration = 1500.0f;
+
+	private bool canDash = true;
+	private bool isDashing = false;
 
 	private Vector2 previousDirection;
 
@@ -16,33 +20,51 @@ public partial class Player : CharacterBody2D
     {
         _animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dashCooldownTimer = GetNode<Timer>("DashCooldownTimer");
-    }   
+    }
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
-
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
 
 		HandleAnimation(direction);
 
-		velocity.X = direction.X * Speed;
-		velocity.Y = direction.Y * Speed;
-
 		if(direction != Vector2.Zero) previousDirection = direction;
 
-		if (Input.IsActionPressed("dash") && canDash)
+		HandleDash();
+		float maxSpeed = isDashing ? DashSpeed : MaxSpeed;
+		MovePlayer(direction, Acceleration, maxSpeed, (float)delta);
+	}
+
+	private void HandleDash()
+	{
+		if(Input.IsActionPressed("dash") && canDash)
     	{
-			GD.Print("DAAAASH");
 			canDash = false;
+			isDashing = true;
 			_dashCooldownTimer.Start();
-
-			velocity.X = previousDirection.X * Speed * DashSpeed;
-			velocity.Y = previousDirection.Y * Speed * DashSpeed; //Find a way to move smoothly
 		}
+	}
 
+	private void MovePlayer(Vector2 direction, float acceleration, float maxSpeed, float delta)
+	{
+		Vector2 velocity = Velocity;
+
+		//Smooth movement
+		if(direction == Vector2.Zero) 
+		{
+			if(velocity.Length() > (Friction * (float)delta))
+			{
+				velocity -= velocity.Normalized() * Friction * (float)delta;
+			} else 
+			{
+				velocity = Vector2.Zero;
+			}
+		} else 
+		{
+			velocity += direction * acceleration * (float)delta;
+			velocity = velocity.LimitLength(maxSpeed);
+		}
+		
 		Velocity = velocity;
 		MoveAndSlide();
 	}
@@ -50,7 +72,7 @@ public partial class Player : CharacterBody2D
 	public void _OnDashCooldownTimeout()
 	{
 		canDash = true;
-		GD.Print("you can DAAAASH now ;)");
+		isDashing = false;
 	}
 
 	private void HandleAnimation(Vector2 currentDirection) 
