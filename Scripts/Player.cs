@@ -3,8 +3,11 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	public const float Speed = 250.0f;
-	public const float DashSpeed = 20.0f;
+	private const float MaxSpeed = 250.0f;
+	private const float DashSpeed = 600.0f; 
+	private const float Friction = 1200.0f;
+	private const float Acceleration = 250.0f;
+
 	private bool canDash = true;
 
 	private AnimatedSprite2D _animatedSprite;
@@ -16,7 +19,7 @@ public partial class Player : CharacterBody2D
     {
         _animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dashCooldownTimer = GetNode<Timer>("DashCooldownTimer");
-    }   
+    }
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -28,21 +31,35 @@ public partial class Player : CharacterBody2D
 
 		HandleAnimation(direction);
 
-		velocity.X = direction.X * Speed;
-		velocity.Y = direction.Y * Speed;
-
 		if(direction != Vector2.Zero) previousDirection = direction;
 
 		if (Input.IsActionPressed("dash") && canDash)
     	{
 			GD.Print("DAAAASH");
+
+			// speed = 1000.0f;
+
 			canDash = false;
 			_dashCooldownTimer.Start();
 
-			velocity.X = previousDirection.X * Speed * DashSpeed;
-			velocity.Y = previousDirection.Y * Speed * DashSpeed; //Find a way to move smoothly
 		}
 
+		//Smooth movement
+		if(direction == Vector2.Zero) 
+		{
+			if(velocity.Length() > (Friction * (float)delta))
+			{
+				velocity -= velocity.Normalized() * Friction * (float)delta;
+			} else 
+			{
+				velocity = Vector2.Zero;
+			}
+		} else 
+		{
+			velocity += direction * Acceleration * (float)delta;
+			velocity = velocity.LimitLength(MaxSpeed);
+		}
+		
 		Velocity = velocity;
 		MoveAndSlide();
 	}
