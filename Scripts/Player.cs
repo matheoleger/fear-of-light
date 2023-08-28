@@ -3,6 +3,9 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	private AnimatedSprite2D _animatedSprite;
+	private Timer _dashCooldownTimer;
+
 	private const float MaxSpeed = 200.0f;
 	private const float DashSpeed = 600.0f; 
 	private const float Friction = 1200.0f;
@@ -10,9 +13,6 @@ public partial class Player : CharacterBody2D
 
 	private bool canDash = true;
 	private bool isDashing = false;
-
-	private AnimatedSprite2D _animatedSprite;
-	private Timer _dashCooldownTimer;
 
 	private Vector2 previousDirection;
 
@@ -31,10 +31,18 @@ public partial class Player : CharacterBody2D
 		if(direction != Vector2.Zero) previousDirection = direction;
 
 		HandleDash();
-
 		float maxSpeed = isDashing ? DashSpeed : MaxSpeed;
-
 		MovePlayer(direction, Acceleration, maxSpeed, (float)delta);
+	}
+
+	private void HandleDash()
+	{
+		if(Input.IsActionPressed("dash") && canDash)
+    	{
+			canDash = false;
+			isDashing = true;
+			_dashCooldownTimer.Start();
+		}
 	}
 
 	private void MovePlayer(Vector2 direction, float acceleration, float maxSpeed, float delta)
@@ -61,23 +69,10 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
-	private void HandleDash()
-	{
-		if(Input.IsActionPressed("dash") && canDash)
-    	{
-			GD.Print("DAAAASH");
-
-			canDash = false;
-			isDashing = true;
-			_dashCooldownTimer.Start();
-		}
-	}
-
 	public void _OnDashCooldownTimeout()
 	{
 		canDash = true;
 		isDashing = false;
-		GD.Print("you can DAAAASH now ;)");
 	}
 
 	private void HandleAnimation(Vector2 currentDirection) 
