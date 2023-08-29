@@ -7,7 +7,9 @@ public partial class Player : CharacterBody2D
 	private Timer _dashCooldownTimer;
 
 	private const float MaxSpeed = 200.0f;
-	private const float DashSpeed = 600.0f; 
+	private const float DashSpeed = 700.0f; 
+	private const float DashAcceleration = 2500.0f;
+
 	private const float Friction = 1200.0f;
 	private const float Acceleration = 1500.0f;
 
@@ -32,7 +34,8 @@ public partial class Player : CharacterBody2D
 
 		HandleDash();
 		float maxSpeed = isDashing ? DashSpeed : MaxSpeed;
-		MovePlayer(direction, Acceleration, maxSpeed, (float)delta);
+		float acceleration = isDashing ? DashAcceleration : Acceleration;
+		MovePlayer(direction, acceleration, maxSpeed, (float)delta);
 	}
 
 	private void HandleDash()
