@@ -6,25 +6,41 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D _animatedSprite;
 	private Timer _dashCooldownTimer;
 
+	private PointLight2D _pointLight;
+	private AudioStreamPlayer2D _audioStreamPlayer;
+
 	private const float MaxSpeed = 200.0f;
-	private const float DashSpeed = 600.0f; 
+	private const float DashSpeed = 700.0f; 
+	private const float DashAcceleration = 2500.0f;
+
 	private const float Friction = 1200.0f;
 	private const float Acceleration = 1500.0f;
 
 	private bool canDash = true;
 	private bool isDashing = false;
 
+	private bool isAwake = false;
+	private bool isAlreadyAwake = false;
+
 	private Vector2 previousDirection;
 
     public override void _Ready()
     {
+		// Define nodes
         _animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dashCooldownTimer = GetNode<Timer>("DashCooldownTimer");
+		_pointLight = GetNode<PointLight2D>("PointLight2D");
+		_audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+
+		// Define default states
+		_pointLight.Energy = 0;
     }
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+
+		HandleAwakening((float)delta);
 
 		HandleAnimation(direction);
 
@@ -32,7 +48,21 @@ public partial class Player : CharacterBody2D
 
 		HandleDash();
 		float maxSpeed = isDashing ? DashSpeed : MaxSpeed;
-		MovePlayer(direction, Acceleration, maxSpeed, (float)delta);
+		float acceleration = isDashing ? DashAcceleration : Acceleration;
+		MovePlayer(direction, acceleration, maxSpeed, (float)delta);
+	}
+
+	private void HandleAwakening(float delta)
+	{
+		if(Input.IsAnythingPressed() && !isAwake)
+			isAwake = true;
+
+		if(isAwake && _pointLight.Energy == 0.0) 
+			_audioStreamPlayer.Play();
+			isAlreadyAwake = true;
+
+		if(isAwake && _pointLight.Energy < 0.6)
+			_pointLight.Energy += 0.8f*delta;
 	}
 
 	private void HandleDash()
