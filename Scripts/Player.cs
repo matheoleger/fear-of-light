@@ -112,7 +112,7 @@ public partial class Player : CharacterBody2D
 			_animatedSprite.Play("walk-down");
 		} else if(currentDirection == Vector2.Up)
 		{
-			_animatedSprite.Play("walk-top");
+			_animatedSprite.Play("walk-up");
 		} else if(currentDirection == Vector2.Left)
 		{
 			_animatedSprite.Play("walk-left");
@@ -129,7 +129,7 @@ public partial class Player : CharacterBody2D
 			_animatedSprite.Play("idle-down");
 		} else if(previousDirection == Vector2.Up)
 		{
-			_animatedSprite.Play("idle-top");
+			_animatedSprite.Play("idle-up");
 		} else if(previousDirection == Vector2.Left)
 		{
 			_animatedSprite.Play("idle-left");
