@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://b7hi1ryxf8yfb"]
+[gd_scene load_steps=105 format=3 uid="uid://b7hi1ryxf8yfb"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_bpawd"]
 [ext_resource type="Texture2D" uid="uid://codq8t13na2dc" path="res://Resources/Animations/Player Animations/idle/v1/player-down-idle.png" id="2_k8h41"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://6ftif8ock3as" path="res://Resources/Animations/Player Animations/walk/v1/player-right-walk.png" id="8_cu2c2"]
 [ext_resource type="Texture2D" uid="uid://nvs6opgidr3v" path="res://Resources/Animations/Player Animations/walk/v1/player-top-walk.png" id="9_3d7o4"]
 [ext_resource type="Texture2D" uid="uid://bfkhah4axphpu" path="res://Resources/Textures/light.png" id="10_a1h3b"]
+[ext_resource type="AudioStream" uid="uid://c2dg5xbh5sqwo" path="res://Resources/Audios/Fear-of-light-respiration-1.mp3" id="11_wrdy8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cq7s2"]
 atlas = ExtResource("2_k8h41")
@@ -720,7 +721,7 @@ drag_right_margin = 0.0
 drag_bottom_margin = 0.0
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(1, 0.368627, 0.368627, 1)
+color = Color(1, 0.580392, 0.556863, 1)
 energy = 0.6
 shadow_enabled = true
 texture = ExtResource("10_a1h3b")
@@ -728,5 +729,8 @@ texture = ExtResource("10_a1h3b")
 [node name="DashCooldownTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_wrdy8")
 
 [connection signal="timeout" from="DashCooldownTimer" to="." method="_OnDashCooldownTimeout"]
