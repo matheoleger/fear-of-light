@@ -6,9 +6,9 @@
 
 [node name="TestScene" type="Node2D"]
 
-[node name="GlyphCursor" parent="." instance=ExtResource("1_i2k7s")]
-
 [node name="Map" parent="." instance=ExtResource("1_4mi7b")]
+
+[node name="GlyphCursor" parent="." instance=ExtResource("1_i2k7s")]
 
 [node name="Player" parent="." instance=ExtResource("2_c7gyd")]
 

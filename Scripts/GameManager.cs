@@ -10,7 +10,7 @@ public partial class GameManager : Node
 
 	#endregion
 
-	private Player player;
+	public Player player;
 
 	private string[] gameScenes = {
 		"TestScene"
@@ -20,7 +20,6 @@ public partial class GameManager : Node
 	{
 		instance = this;
 
-		// player = GetNode<Player>("/root/TestScene/Player");
 		player = GetTree().CurrentScene.GetNode<Player>("Player");
 
 		// [WARNING] Depends on the GameManager is not shared between scenes.
@@ -30,7 +29,6 @@ public partial class GameManager : Node
 
 	public override void _Process(double delta)
 	{
-		GD.Print(player.previousDirection);
-		
+		// [TODO] Add verification if the player is in "playmode" and not in "menu" or "pausemode"
 	}
 }

@@ -5,75 +5,49 @@ using System.Text.Json.Serialization;
 public partial class GlyphCursor : Node2D
 {
 
-	private Resource lightGlyphCursor;
+	private Texture2D lightGlyphCursor;
+	private Sprite2D _sprite2D;
 
 	private Vector2 previousMousePosition;
+	private const float maxDistance = 130f;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		lightGlyphCursor = ResourceLoader.Load("res://Resources/Images/light-glyph-v1.png");
+		lightGlyphCursor = ResourceLoader.Load<Texture2D>("res://Resources/Images/light-glyph-v1.png");
+		_sprite2D = GetNode<Sprite2D>("Sprite2D");
+
+		// Define default glyph cursor
+		GD.Print(lightGlyphCursor);
+		_sprite2D.Texture = lightGlyphCursor;
+
+		Visible = false;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		// [TODO] Add verification if the player is in "playmode" and not in "menu" or "pausemode"
 
-		// if(Input.IsActionPressed("mouse_right"))
-		// {
-		// 	Input.MouseMode = Input.MouseModeEnum.Visible;
-		// } else {
-		// 	Input.MouseMode = Input.MouseModeEnum.Hidden;
-		// }
+		if(Input.IsActionPressed("mouse_right"))
+		{
+			Visible = true;
+			Input.MouseMode = Input.MouseModeEnum.Confined;
+			Vector2 mousePosition = GetGlobalMousePosition();
 
-		// if(Input.GetMouse)
+			Vector2 distance = mousePosition - GameManager.instance.player.Position;
 
-		// GetViewport().WarpMouse(Vector2.Zero);
-
+			if(distance.Length() > maxDistance)
+			{
+				Position = GameManager.instance.player.Position + distance.Normalized() * maxDistance;
+			} else 
+			{
+				Position = GameManager.instance.player.Position + distance;
+			}
+		} else {
+			Visible = false;
+			Input.MouseMode = Input.MouseModeEnum.Hidden;
+		}
+		
 		// [TODO] Add mouse left action
 	}
-
-    // public override void _Input(InputEvent @event)
-    // {
-	// 	// if(@event is InputEventMouseButton eventMouseButton && eventMouseButton.IsActionPressed("mouse_right"))
-	// 	// {
-	// 	// 	Input.MouseMode = Input.MouseModeEnum.Visible;
-
-	// 	// } else {
-	// 	// 	Input.MouseMode = Input.MouseModeEnum.Hidden;
-	// 	// }
-
-	// 	if(Input.IsActionPressed("mouse_right"))
-	// 	{
-	// 		Input.MouseMode = Input.MouseModeEnum.Visible;
-
-	// 		if(@event is InputEventMouseMotion eventMouseMotion)
-	// 		{
-	// 			// GD.Print(eventMouseMotion.Position);
-				
-	// 			Vector2 test = eventMouseMotion.Position - Vector2.Zero;
-
-	// 			GD.Print(test.Length());
-
-	// 			if(test.Length() >= 300)
-	// 			{
-					
-	// 				// eventMouseMotion.Position = Vector2.Zero;
-	// 				// GD.Print("EVENTMOUSEPOSITION", eventMouseMotion.Position);
-	// 				// GetViewport().WarpMouse(previousMousePosition); // work but not well.
-	// 				Input.SetDefaultCursorShape(Input.CursorShape.CanDrop);
-	// 			} else 
-	// 			{
-	// 				previousMousePosition = eventMouseMotion.Position;
-	// 				Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
-	// 			}
-
-	// 			GD.Print("test", test);
-	// 		}
-	// 	} else 
-	// 	{
-	// 		Input.MouseMode = Input.MouseModeEnum.Hidden;
-	// 	}
-    // }
 }
