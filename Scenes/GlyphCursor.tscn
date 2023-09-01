@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx1xv2rr2tcqk"]
+
+[ext_resource type="Script" path="res://Scripts/GlyphCursor.cs" id="1_24mmr"]
+
+[node name="GlyphCursor" type="Node2D"]
+script = ExtResource("1_24mmr")

@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://clubtpi4dfkst"]
 
 [ext_resource type="PackedScene" uid="uid://cg2xa2cogs6mw" path="res://Scenes/TestMap.tscn" id="1_4mi7b"]
-[ext_resource type="PackedScene" uid="uid://bx1xv2rr2tcqk" path="res://Scenes/CursorManager.tscn" id="1_i2k7s"]
+[ext_resource type="PackedScene" uid="uid://bx1xv2rr2tcqk" path="res://Scenes/GlyphCursor.tscn" id="1_i2k7s"]
 [ext_resource type="PackedScene" uid="uid://b7hi1ryxf8yfb" path="res://Scenes/Player.tscn" id="2_c7gyd"]
 
-[node name="Node2D" type="Node2D"]
+[node name="TestScene" type="Node2D"]
 
-[node name="CursorManager" parent="." instance=ExtResource("1_i2k7s")]
+[node name="GlyphCursor" parent="." instance=ExtResource("1_i2k7s")]
 
 [node name="Map" parent="." instance=ExtResource("1_4mi7b")]
 

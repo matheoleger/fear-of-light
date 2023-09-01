@@ -22,7 +22,7 @@ public partial class Player : CharacterBody2D
 	private bool isAwake = false;
 	private bool isAlreadyAwake = false;
 
-	private Vector2 previousDirection;
+	public Vector2 previousDirection;
 
     public override void _Ready()
     {
