@@ -5,7 +5,7 @@ public partial class GlyphCursor : Node2D
 {
 
 	private Texture2D lightGlyphCursor;
-	private PackedScene lightCrystal;
+	private PackedScene lightCrystalScene;
 	private Sprite2D _sprite2D;
 
 	private enum CursorActions
@@ -22,7 +22,7 @@ public partial class GlyphCursor : Node2D
 	public override void _Ready()
 	{
 		lightGlyphCursor = ResourceLoader.Load<Texture2D>("res://Resources/Images/light-glyph-v1.png");
-		lightCrystal = GD.Load<PackedScene>("res://Scenes/LightCrystal.tscn");
+		lightCrystalScene = GD.Load<PackedScene>("res://Scenes/LightCrystal.tscn");
 		_sprite2D = GetNode<Sprite2D>("Sprite2D");
 
 		// Define default glyph cursor
@@ -40,7 +40,7 @@ public partial class GlyphCursor : Node2D
 
 	private void HandleAim()
 	{
-		if(Input.IsActionPressed("mouse_right"))
+		if(Input.IsActionPressed("aim_with_glyph"))
 		{
 			Visible = true;
 			Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
@@ -60,15 +60,20 @@ public partial class GlyphCursor : Node2D
 
 	private void HandleAction() 
 	{
-		if(selectedActions == CursorActions.SummonLightCrystal && Input.IsActionPressed("mouse_left") && Input.IsActionPressed("mouse_right"))
+		bool isAiming = Input.IsActionPressed("aim_with_glyph");
+		bool isPlacing = Input.IsActionPressed("place_glyph");
+
+		if(!isPlacing || !isAiming) return;
+
+		if(selectedActions == CursorActions.SummonLightCrystal)
 		{
-			Node lightCrystalInstance = lightCrystal.Instantiate();
-			
-			//[TODO] Improve this part
-			lightCrystalInstance.Set("position", Position);
-			
-			//[TODO] Add verification to delete LightCrystal
-			GetTree().CurrentScene.RemoveChild(GetTree().CurrentScene.GetNode("LightCrystal"));
+			Node previousLightCrystal = GetTree().CurrentScene.GetNodeOrNull("LightCrystal");
+			LightCrystal lightCrystalInstance = lightCrystalScene.Instantiate<LightCrystal>();
+		
+			lightCrystalInstance.Position = Position;
+
+			if(previousLightCrystal != null)
+				GetTree().CurrentScene.RemoveChild(previousLightCrystal);
 
 			GetTree().CurrentScene.AddChild(lightCrystalInstance);
 		}
