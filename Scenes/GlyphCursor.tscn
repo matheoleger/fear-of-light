@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx1xv2rr2tcqk"]
+
+[ext_resource type="Script" path="res://Scripts/GlyphCursor.cs" id="1_24mmr"]
+[ext_resource type="Texture2D" uid="uid://bfkhah4axphpu" path="res://Resources/Textures/light.png" id="2_pkuot"]
+
+[node name="GlyphCursor" type="Node2D"]
+script = ExtResource("1_24mmr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.305882, 0.309804, 1)
+energy = 0.3
+texture = ExtResource("2_pkuot")
+texture_scale = 0.2
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_OnCooldownTimerTimeout"]
