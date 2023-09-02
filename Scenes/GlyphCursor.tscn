@@ -14,3 +14,8 @@ color = Color(1, 0.305882, 0.309804, 1)
 energy = 0.3
 texture = ExtResource("2_pkuot")
 texture_scale = 0.2
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_OnCooldownTimerTimeout"]
