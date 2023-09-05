@@ -20,7 +20,7 @@ public partial class GameManager : Node
 	{
 		instance = this;
 
-		player = GetTree().CurrentScene.GetNode<Player>("Player");
+		player = GetTree().CurrentScene.GetNodeOrNull<Player>("Player");
 
 		// [WARNING] Depends on the GameManager is not shared between scenes.
 		if(gameScenes.Contains<string>(GetTree().CurrentScene.Name))

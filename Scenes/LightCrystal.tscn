@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b2qm0cm3vyedx"]
+[gd_scene load_steps=21 format=3 uid="uid://b2qm0cm3vyedx"]
 
 [ext_resource type="Texture2D" uid="uid://pn1j0vc40ouc" path="res://Resources/Animations/light-crystal/light-crystal.png" id="1_2hoay"]
 [ext_resource type="Script" path="res://Scripts/LightCrystal.cs" id="1_peynb"]
@@ -110,7 +110,15 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="LightCrystal" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_015ui"]
+size = Vector2(16, 24)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gdat0"]
+radius = 32.0
+
+[node name="LightCrystal" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_peynb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -118,8 +126,18 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xgr06")
 frame_progress = 0.117397
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_015ui")
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(1, 0.278431, 0.282353, 1)
 energy = 0.3
 texture = ExtResource("2_hps06")
 texture_scale = 0.5
+
+[node name="LightCrystalLightArea" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightCrystalLightArea"]
+shape = SubResource("CircleShape2D_gdat0")
