@@ -29,7 +29,7 @@ public partial class LightSensor : Activator
 
 			if(_raycast2D.IsColliding() && colliderType != typeof(TileMap))
 			{
-				isEnabled = true;
+				if(!IsEnabled) IsEnabled = true;
 
 				if(!detectedLightSources.Contains(lightSource))
 					detectedLightSources.Add(lightSource);
@@ -40,8 +40,8 @@ public partial class LightSensor : Activator
 			}
 		}
 
-		if(detectedLightSources.Count == 0)
-			isEnabled = false;
+		if(detectedLightSources.Count == 0 && IsEnabled)
+			IsEnabled = false;
 
 		HandleAnimation();
 	}
@@ -65,6 +65,6 @@ public partial class LightSensor : Activator
 
 	private void HandleAnimation()
 	{
-		_animatedSprite.Play(isEnabled ? "enabled" : "disabled");
+		_animatedSprite.Play(IsEnabled ? "enabled" : "disabled");
 	}
 }

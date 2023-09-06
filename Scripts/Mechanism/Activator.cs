@@ -3,5 +3,24 @@ using System;
 
 public partial class Activator : Node2D
 {
-    protected bool isEnabled = false;
+    private bool _isEnabled = false;
+    private bool previousIsEnabled = false;
+
+    public bool IsEnabled
+    {
+        get
+        {
+            return _isEnabled;
+        }
+
+        protected set
+        {
+            _isEnabled = value;
+            EmitSignal(SignalName.ActivatorHasChangedState, this);
+        }
+    }
+
+    [Signal]
+    public delegate void ActivatorHasChangedStateEventHandler(Activator activator);
+
 }
