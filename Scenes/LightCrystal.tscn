@@ -116,7 +116,7 @@ size = Vector2(16, 24)
 [sub_resource type="CircleShape2D" id="CircleShape2D_gdat0"]
 radius = 32.0
 
-[node name="LightCrystal" type="StaticBody2D"]
+[node name="LightCrystal" type="StaticBody2D" groups=["LightSources"]]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_peynb")

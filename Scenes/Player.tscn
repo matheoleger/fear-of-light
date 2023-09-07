@@ -694,7 +694,7 @@ radius = 11.0082
 [sub_resource type="CircleShape2D" id="CircleShape2D_g8m0q"]
 radius = 88.0511
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["LightSources"]]
 collision_mask = 3
 script = ExtResource("1_bpawd")
 
