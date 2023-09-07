@@ -23,8 +23,10 @@ public partial class LightSensor : Activator
 		foreach(Area2D lightSource in lightSourcesInArea)
 		{
 			_raycast2D.TargetPosition = lightSource.GetParent<Node2D>().Position - _raycast2D.GetParent<Node2D>().Position;
-
+			_raycast2D.ForceRaycastUpdate();
+			
 			GodotObject collider = _raycast2D.GetCollider();
+			if(collider == null) continue;
 			Type colliderType = collider.GetType();
 
 			if(_raycast2D.IsColliding() && colliderType != typeof(TileMap))
@@ -33,7 +35,8 @@ public partial class LightSensor : Activator
 
 				if(!detectedLightSources.Contains(lightSource))
 					detectedLightSources.Add(lightSource);
-			} else
+
+			} else if(_raycast2D.IsColliding())
 			{
 				if(detectedLightSources.Contains(lightSource))
 					detectedLightSources.Remove(lightSource);
@@ -50,7 +53,6 @@ public partial class LightSensor : Activator
 	{
 		if(!lightSourcesInArea.Contains(area))
 			lightSourcesInArea.Add(area);
-
 	}
 
 	public void _OnArea2dAreaExited(Area2D area)
