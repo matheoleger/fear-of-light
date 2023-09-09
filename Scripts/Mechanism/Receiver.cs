@@ -31,7 +31,6 @@ public partial class Receiver : Node2D
 
     public override void _Ready()
     {
-        GD.Print("EVERYTHING IS OK");
         foreach (Activator activator in activators)
         {
             activator.ActivatorHasChangedState += OnActivatorHasChangedState;
@@ -44,9 +43,6 @@ public partial class Receiver : Node2D
 
     protected void OnActivatorHasChangedState(Activator activator)
     {
-        GD.Print("I RECEIVED THE SIGNAL FROM ACTIVATOR");
-        GD.Print(activator.IsEnabled);
-
         if(activator.IsEnabled && numberOfActivatedActivators < numberOfActivator)
         {
             numberOfActivatedActivators++;
