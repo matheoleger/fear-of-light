@@ -9,12 +9,12 @@ public partial class Door : Receiver
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		base._Ready();
+
 		GD.Print("ISENABLED ?", IsEnabled);
 
 		_topAnimatedSprite = GetNode<AnimatedSprite2D>("TopAnimatedSprite2D");
-		_downAnimatedSprite = GetNode<AnimatedSprite2D>("DownAnimatedSprite2D");
-	
-		SetupSignals();
+		_downAnimatedSprite = GetNode<AnimatedSprite2D>("DownAnimatedSprite2D");	
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
