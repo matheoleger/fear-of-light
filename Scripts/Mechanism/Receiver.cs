@@ -27,7 +27,7 @@ public partial class Receiver : Node2D
     }
 
     [Export]
-    protected LogicGate logicGate;
+    protected LogicGate logicGate = LogicGate.And;
 
     public override void _Ready()
     {
