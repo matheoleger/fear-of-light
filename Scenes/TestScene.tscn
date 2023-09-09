@@ -26,8 +26,7 @@ texture = ExtResource("1_xm7q1")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="Map/ParallaxBackground"]
 motion_scale = Vector2(0.2, 0.2)
-motion_offset = Vector2(200, 200)
-motion_mirroring = Vector2(768, 225)
+motion_mirroring = Vector2(384, 225)
 
 [node name="Sprite2D" type="Sprite2D" parent="Map/ParallaxBackground/ParallaxLayer3"]
 texture_filter = 1
@@ -49,13 +48,12 @@ layer_2/tile_data = PackedInt32Array(-327692, 1, 0, -262156, 1, 1, -327691, 6553
 [node name="Door" parent="Map" node_paths=PackedStringArray("activators") instance=ExtResource("4_muyt6")]
 position = Vector2(-80, -120)
 activators = [NodePath("../LightSensor"), NodePath("../LightSensor2")]
-logicGate = 6
 
 [node name="LightSensor" parent="Map" instance=ExtResource("2_rrsei")]
 position = Vector2(-224, 96)
 
 [node name="LightSensor2" parent="Map" instance=ExtResource("2_rrsei")]
-position = Vector2(-224, -8)
+position = Vector2(-288, -16)
 
 [node name="GlyphCursor" parent="." instance=ExtResource("1_i2k7s")]
 

@@ -41,7 +41,7 @@ public partial class Receiver : Node2D
         CheckReceiverState();
     }
 
-    protected void OnActivatorHasChangedState(Activator activator)
+    protected virtual void OnActivatorHasChangedState(Activator activator)
     {
         if(activator.IsEnabled && numberOfActivatedActivators < numberOfActivator)
         {
