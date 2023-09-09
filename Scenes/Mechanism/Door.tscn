@@ -1,0 +1,95 @@
+[gd_scene load_steps=12 format=3 uid="uid://w5hxk6pckerq"]
+
+[ext_resource type="Texture2D" uid="uid://couqbyhj7cut7" path="res://Resources/Sprites/door-v1-disable.png" id="1_dgbfg"]
+[ext_resource type="Script" path="res://Scripts/Mechanism/Door.cs" id="1_jxyg3"]
+[ext_resource type="Texture2D" uid="uid://dmr8mbisofw5w" path="res://Resources/Sprites/door-v1-enable.png" id="2_tb708"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1gr8h"]
+atlas = ExtResource("1_dgbfg")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tusgp"]
+atlas = ExtResource("2_tb708")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cgi2g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1gr8h")
+}],
+"loop": true,
+"name": &"close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tusgp")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxlm8"]
+atlas = ExtResource("1_dgbfg")
+region = Rect2(0, 64, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2kb3"]
+atlas = ExtResource("2_tb708")
+region = Rect2(0, 64, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h05ka"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxlm8")
+}],
+"loop": true,
+"name": &"close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2kb3")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7brd"]
+size = Vector2(96, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0wul"]
+size = Vector2(80, 88)
+
+[node name="Door" type="StaticBody2D" node_paths=PackedStringArray("activators")]
+texture_filter = 1
+script = ExtResource("1_jxyg3")
+activators = []
+
+[node name="TopAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 2
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_cgi2g")
+animation = &"open"
+
+[node name="DownAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 32)
+sprite_frames = SubResource("SpriteFrames_h05ka")
+animation = &"open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_x7brd")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_y0wul")
+debug_color = Color(0, 0.631373, 0.443137, 0.419608)
+
+[connection signal="body_entered" from="Area2D" to="." method="_OnArea2dBodyEntered"]
+[connection signal="body_exited" from="Area2D" to="." method="_OnArea2dBodyExited"]

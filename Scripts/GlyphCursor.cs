@@ -40,7 +40,7 @@ public partial class GlyphCursor : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-			HandleAim();
+		HandleAim();
 
 		if(isCursorEnabled)
 			HandleAction();
@@ -71,7 +71,7 @@ public partial class GlyphCursor : Node2D
 
 	private void ChangeCursorVisualState()
 	{
-		const float diabledCursorModulateOpacity = 0.5f;
+		const float disabledCursorModulateOpacity = 0.5f;
 		const float cursorLightDefaultEnergy = 0.3f;
 
 		Color modulate = Modulate;
@@ -80,7 +80,7 @@ public partial class GlyphCursor : Node2D
 		{
 			_pointLight.Energy = 0.0f;
 
-			modulate.A = diabledCursorModulateOpacity;
+			modulate.A = disabledCursorModulateOpacity;
 			Modulate = modulate;
 		}
 		else if (_pointLight.Energy < cursorLightDefaultEnergy)

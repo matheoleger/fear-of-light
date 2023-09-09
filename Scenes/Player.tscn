@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=3 uid="uid://b7hi1ryxf8yfb"]
+[gd_scene load_steps=106 format=3 uid="uid://b7hi1ryxf8yfb"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_bpawd"]
 [ext_resource type="Texture2D" uid="uid://codq8t13na2dc" path="res://Resources/Animations/Player Animations/idle/v1/player-down-idle.png" id="2_k8h41"]
@@ -691,7 +691,11 @@ size = Vector2(21.5, 41)
 [sub_resource type="CircleShape2D" id="CircleShape2D_l5dlp"]
 radius = 11.0082
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_g8m0q"]
+radius = 88.0511
+
+[node name="Player" type="CharacterBody2D" groups=["LightSources"]]
+collision_mask = 3
 script = ExtResource("1_bpawd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -731,5 +735,12 @@ one_shot = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_wrdy8")
+
+[node name="PlayerLightArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerLightArea"]
+shape = SubResource("CircleShape2D_g8m0q")
 
 [connection signal="timeout" from="DashCooldownTimer" to="." method="_OnDashCooldownTimeout"]
