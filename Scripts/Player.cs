@@ -46,6 +46,8 @@ public partial class Player : CharacterBody2D
 
 		if(direction != Vector2.Zero) previousDirection = direction;
 
+		ApplyForceToRigidBodies();
+
 		HandleDash();
 		float maxSpeed = isDashing ? DashSpeed : MaxSpeed;
 		float acceleration = isDashing ? DashAcceleration : Acceleration;
@@ -72,6 +74,16 @@ public partial class Player : CharacterBody2D
 			canDash = false;
 			isDashing = true;
 			_dashCooldownTimer.Start();
+		}
+	}
+
+	private void ApplyForceToRigidBodies()
+	{
+		for(int slideIndex = 0; slideIndex < GetSlideCollisionCount(); slideIndex++)
+		{
+			KinematicCollision2D collision = GetSlideCollision(slideIndex);
+			if(collision.GetCollider() is RigidBody2D rigidBodyObject && rigidBodyObject.Name == "Cube")
+				rigidBodyObject.ApplyCentralImpulse(-collision.GetNormal() * 10);
 		}
 	}
 

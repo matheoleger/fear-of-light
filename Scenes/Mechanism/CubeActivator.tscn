@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://bc2sbgfgouw71"]
+
+[ext_resource type="Script" path="res://Scripts/Mechanism/CubeActivator.cs" id="1_34epg"]
+[ext_resource type="Texture2D" uid="uid://c6x6ov6vy33fr" path="res://Resources/Sprites/cube-activator-v1-disabled.png" id="2_lv5xf"]
+[ext_resource type="Texture2D" uid="uid://tie0wqlyxw85" path="res://Resources/Sprites/cube-activator-v1-enabled.png" id="3_lbbxn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qfj4e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_lv5xf")
+}],
+"loop": true,
+"name": &"disabled",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_lbbxn")
+}],
+"loop": true,
+"name": &"enabled",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cacrg"]
+size = Vector2(16, 16)
+
+[node name="CubeActivator" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_34epg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qfj4e")
+animation = &"disabled"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_cacrg")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[connection signal="body_entered" from="Area2D" to="." method="_OnArea2dBodyEntered"]
+[connection signal="body_exited" from="Area2D" to="." method="_OnArea2dBodyExited"]

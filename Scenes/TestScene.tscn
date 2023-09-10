@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://clubtpi4dfkst"]
+[gd_scene load_steps=11 format=3 uid="uid://clubtpi4dfkst"]
 
 [ext_resource type="PackedScene" uid="uid://cg2xa2cogs6mw" path="res://Scenes/TestMap.tscn" id="1_4mi7b"]
 [ext_resource type="PackedScene" uid="uid://bx1xv2rr2tcqk" path="res://Scenes/GlyphCursor.tscn" id="1_i2k7s"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://dkyuo4j41bic8" path="res://Resources/Images/background-v1-layer-2.png" id="3_o4y85"]
 [ext_resource type="PackedScene" uid="uid://w5hxk6pckerq" path="res://Scenes/Mechanism/Door.tscn" id="4_muyt6"]
 [ext_resource type="Texture2D" uid="uid://bklhcm7qnxv0t" path="res://Resources/Images/background-v1-layer-3.png" id="4_whxh4"]
+[ext_resource type="PackedScene" uid="uid://bc2sbgfgouw71" path="res://Scenes/Mechanism/CubeActivator.tscn" id="6_g3ugn"]
+[ext_resource type="PackedScene" uid="uid://dbklourcd4ewh" path="res://Scenes/Mechanism/Cube.tscn" id="7_s116x"]
 
 [node name="TestScene" type="Node2D"]
 
@@ -25,6 +27,7 @@ scale = Vector2(4, 4)
 texture = ExtResource("1_xm7q1")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="Map/ParallaxBackground"]
+visible = false
 motion_scale = Vector2(0.2, 0.2)
 motion_mirroring = Vector2(384, 225)
 
@@ -47,7 +50,13 @@ layer_2/tile_data = PackedInt32Array(-327692, 1, 0, -262156, 1, 1, -327691, 6553
 
 [node name="Door" parent="Map" node_paths=PackedStringArray("activators") instance=ExtResource("4_muyt6")]
 position = Vector2(-80, -120)
-activators = [NodePath("../LightSensor"), NodePath("../LightSensor2")]
+activators = [NodePath("../LightSensor"), NodePath("../LightSensor2"), NodePath("../CubeActivator")]
+
+[node name="CubeActivator" parent="Map" instance=ExtResource("6_g3ugn")]
+position = Vector2(-80, 100)
+
+[node name="Cube" parent="Map" instance=ExtResource("7_s116x")]
+position = Vector2(0, 70)
 
 [node name="LightSensor" parent="Map" instance=ExtResource("2_rrsei")]
 position = Vector2(-224, 96)
