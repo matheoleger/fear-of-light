@@ -19,16 +19,21 @@ public partial class CubeActivator : Activator
 	{
 		HandleAnimation();
 
-		//We do that because we can"t use AreaEntered/Exited to change the state of collision shape of the door. (https://ask.godotengine.org/38401/does-cant-change-this-state-while-flushing-queries-error-mean)
-		if(cubeIsDetected && !IsEnabled)
-			IsEnabled = true;
-		else if(!cubeIsDetected && IsEnabled)
-			IsEnabled = false;
+		ChangeState();
 	}
 
 	private void HandleAnimation()
 	{
 		_animatedSprite.Play(IsEnabled ? "enabled" : "disabled");
+	}
+
+	private void ChangeState()
+	{
+		//We do that because we can"t use AreaEntered/Exited to change the state of collision shape of the door. (https://ask.godotengine.org/38401/does-cant-change-this-state-while-flushing-queries-error-mean)
+		if(cubeIsDetected && !IsEnabled)
+			IsEnabled = true;
+		else if(!cubeIsDetected && IsEnabled)
+			IsEnabled = false;
 	}
 
 	public void _OnArea2dBodyEntered(Node2D body)

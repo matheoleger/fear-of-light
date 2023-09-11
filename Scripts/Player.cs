@@ -77,12 +77,13 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
+	//TODO: Show if there is a better solution ?
 	private void ApplyForceToRigidBodies()
 	{
 		for(int slideIndex = 0; slideIndex < GetSlideCollisionCount(); slideIndex++)
 		{
 			KinematicCollision2D collision = GetSlideCollision(slideIndex);
-			if(collision.GetCollider() is RigidBody2D rigidBodyObject && rigidBodyObject.Name == "Cube")
+			if(collision.GetCollider() is RigidBody2D rigidBodyObject && rigidBodyObject.IsInGroup("MovableObjects")) //clean here
 				rigidBodyObject.ApplyCentralImpulse(-collision.GetNormal() * 10);
 		}
 	}

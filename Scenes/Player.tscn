@@ -695,7 +695,7 @@ radius = 11.0082
 radius = 88.0511
 
 [node name="Player" type="CharacterBody2D" groups=["LightSources"]]
-collision_mask = 3
+collision_mask = 11
 script = ExtResource("1_bpawd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

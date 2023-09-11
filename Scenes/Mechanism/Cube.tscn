@@ -5,8 +5,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2wlua"]
 size = Vector2(32, 40)
 
-[node name="Cube" type="RigidBody2D" groups=["Cube"]]
+[node name="Cube" type="RigidBody2D" groups=["Cube", "MovableObjects"]]
 texture_filter = 1
+collision_layer = 8
+collision_mask = 9
 mass = 10.0
 gravity_scale = 0.0
 freeze_mode = 1
