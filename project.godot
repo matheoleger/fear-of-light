@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 GameManager="*res://Scripts/GameManager.cs"
 
+[display]
+
+window/size/mode=2
+
 [dotnet]
 
 project/assembly_name="Fear of Light"
@@ -77,3 +81,9 @@ place_glyph={
 
 2d_physics/layer_1="Player"
 2d_physics/layer_2="LightArea"
+2d_physics/layer_3="SpawnableObjects"
+2d_physics/layer_4="MovableObjects"
+
+[physics]
+
+2d/default_gravity_vector=Vector2(0, 0)
