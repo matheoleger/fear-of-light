@@ -106,9 +106,11 @@ public partial class GlyphCursor : Node2D
 		switch(selectedCursorGlyph){
 			case CursorGlyph.LightGlyph:
 				_sprite2D.Texture = lightGlyphCursor;
+				_pointLight.Color = new Color("ff4e4f");
 				break;
 			case CursorGlyph.MovementGlyph:
 				_sprite2D.Texture = movementGlyphCursor;
+				_pointLight.Color = new Color("6efd99");
 				break;
 		}
 	}
@@ -116,7 +118,11 @@ public partial class GlyphCursor : Node2D
 	private void ReinitializedMovementGlyphProperties()
 	{
 		if(selectedMovableObject != null)
+		{
+			selectedMovableObject.GetNode<Sprite2D>("Sprite2D").Material.Set("shader_parameter/line_thickness", 0);	// Cleaner code ?
+			selectedMovableObject.GetNode<PointLight2D>("PointLight2D").Enabled = false;
 			selectedMovableObject = null;
+		}
 
 		isMovingObject = false;
 	}
@@ -151,7 +157,6 @@ public partial class GlyphCursor : Node2D
 
 		GetTree().CurrentScene.AddChild(lightCrystalInstance);
 
-
 		isCursorEnabled = false;
 		_cooldownTimer.Start();
 	}
@@ -160,11 +165,16 @@ public partial class GlyphCursor : Node2D
 	{
 		if(selectedMovableObject == null) return;
 
+		selectedMovableObject.GetNode<Sprite2D>("Sprite2D").Material.Set("shader_parameter/line_thickness", 1);	// Cleaner code ?
+		
 		bool isSelecting = Input.IsActionPressed("place_glyph");
 
 		if(isSelecting)
 		{
 			isMovingObject = !isMovingObject;
+
+			//Clean ?
+			selectedMovableObject.GetNode<PointLight2D>("PointLight2D").Enabled = isMovingObject;
 		}
 
 		if(isMovingObject)
@@ -187,18 +197,13 @@ public partial class GlyphCursor : Node2D
 		if(isMovingObject || selectedCursorGlyph != CursorGlyph.MovementGlyph) return;
 
 		if(body.IsInGroup("MovableObjects") && body is RigidBody2D rigidBody)
-		{
 			selectedMovableObject = rigidBody;
-			GD.Print("Bonsoir je viens de changer selectedMovableObject", selectedMovableObject);
-		}
 	}
 
 	public void _OnArea2dBodyExited(Node2D body)
 	{
-		GD.Print("ON SORT OU QUOI ?");
-		// if(isMovingObject || !body.IsInGroup("MovableObjects")) return;
 		if(isMovingObject || body != selectedMovableObject) return;
 
-		selectedMovableObject = null;
+		ReinitializedMovementGlyphProperties();
 	}
 }
