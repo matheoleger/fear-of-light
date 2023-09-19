@@ -11,6 +11,8 @@ public partial class GlyphCursor : Node2D
 	private Timer _cooldownTimer;
 	private PointLight2D _pointLight;
 
+	private const float movementGlyphForce = 300;
+
 	private bool isCursorEnabled = true;
 
 	private enum CursorGlyph
@@ -21,7 +23,6 @@ public partial class GlyphCursor : Node2D
 
 	private CursorGlyph selectedCursorGlyph = CursorGlyph.MovementGlyph;
 
-	private Vector2 previousMousePosition;
 	private const float maxDistance = 130f;
 
 	private RigidBody2D selectedMovableObject;
@@ -119,8 +120,11 @@ public partial class GlyphCursor : Node2D
 	{
 		if(selectedMovableObject != null)
 		{
-			selectedMovableObject.GetNode<Sprite2D>("Sprite2D").Material.Set("shader_parameter/line_thickness", 0);	// Cleaner code ?
-			selectedMovableObject.GetNode<PointLight2D>("PointLight2D").Enabled = false;
+			if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
+				movableObjectSprite.Material.Set("shader_parameter/line_thickness", 0);
+			if(selectedMovableObject.GetNode<PointLight2D>("PointLight2D") is PointLight2D movableObjectPointLight)
+				movableObjectPointLight.Enabled = false;
+			
 			selectedMovableObject = null;
 		}
 
@@ -165,7 +169,8 @@ public partial class GlyphCursor : Node2D
 	{
 		if(selectedMovableObject == null) return;
 
-		selectedMovableObject.GetNode<Sprite2D>("Sprite2D").Material.Set("shader_parameter/line_thickness", 1);	// TODO: Cleaner code ?
+		if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
+			movableObjectSprite.Material.Set("shader_parameter/line_thickness", 1);
 		
 		bool isSelecting = Input.IsActionJustPressed("place_glyph");
 
@@ -173,16 +178,16 @@ public partial class GlyphCursor : Node2D
 		{
 			isMovingObject = !isMovingObject;
 
-			//TODO: Clean ? (add verification for PointLight2D)
-			selectedMovableObject.GetNode<PointLight2D>("PointLight2D").Enabled = isMovingObject;
+			if(selectedMovableObject.GetNode<PointLight2D>("PointLight2D") is PointLight2D movableObjectPointLight)
+				movableObjectPointLight.Enabled = isMovingObject;
 		}
 
 		if(isMovingObject)
 		{		
 			Vector2 direction = (Position - selectedMovableObject.GlobalPosition).Normalized();
 
-			if(selectedMovableObject.Position.DistanceTo(Position) > 5)
-				selectedMovableObject.ApplyCentralImpulse(direction * 300); // TODO: Clean code (add const ?)
+			if(selectedMovableObject.Position.DistanceTo(Position) > 5) // Condition to avoid shaking
+				selectedMovableObject.ApplyCentralImpulse(direction * movementGlyphForce);
 		}
 		
 	}
