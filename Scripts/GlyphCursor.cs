@@ -5,34 +5,41 @@ public partial class GlyphCursor : Node2D
 {
 
 	private Texture2D lightGlyphCursor;
+	private Texture2D movementGlyphCursor;
 	private PackedScene lightCrystalScene;
 	private Sprite2D _sprite2D;
 	private Timer _cooldownTimer;
 	private PointLight2D _pointLight;
 
+	private const float movementGlyphForce = 300;
+
 	private bool isCursorEnabled = true;
 
-	private enum CursorActions
+	private enum CursorGlyph
 	{
-		SummonLightCrystal
+		LightGlyph,
+		MovementGlyph
 	}
 
-	private CursorActions selectedActions = CursorActions.SummonLightCrystal;
+	private CursorGlyph selectedCursorGlyph = CursorGlyph.MovementGlyph;
 
-	private Vector2 previousMousePosition;
 	private const float maxDistance = 130f;
+
+	private RigidBody2D selectedMovableObject;
+	private bool isMovingObject = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		lightGlyphCursor = ResourceLoader.Load<Texture2D>("res://Resources/Images/light-glyph-v1.png");
+		movementGlyphCursor = ResourceLoader.Load<Texture2D>("res://Resources/Images/movement-glyph-v1.png");
 		lightCrystalScene = GD.Load<PackedScene>("res://Scenes/LightCrystal.tscn");
 		_sprite2D = GetNode<Sprite2D>("Sprite2D");
 		_cooldownTimer = GetNode<Timer>("CooldownTimer");
 		_pointLight = GetNode<PointLight2D>("PointLight2D");
 
 		// Define default glyph cursor
-		_sprite2D.Texture = lightGlyphCursor;
+		ChangeCursorTexture();
 
 		Visible = false;
 	}
@@ -66,6 +73,9 @@ public partial class GlyphCursor : Node2D
 		} else {
 			Visible = false;
 			Input.MouseMode = Input.MouseModeEnum.Hidden;
+
+			if(selectedCursorGlyph == CursorGlyph.MovementGlyph)
+				ReinitializedMovementGlyphProperties();
 		}
 	}
 
@@ -92,32 +102,113 @@ public partial class GlyphCursor : Node2D
 		}
 	}
 
+	private void ChangeCursorTexture()
+	{
+		switch(selectedCursorGlyph){
+			case CursorGlyph.LightGlyph:
+				_sprite2D.Texture = lightGlyphCursor;
+				_pointLight.Color = new Color("ff4e4f");
+				break;
+			case CursorGlyph.MovementGlyph:
+				_sprite2D.Texture = movementGlyphCursor;
+				_pointLight.Color = new Color("6efd99");
+				break;
+		}
+	}
+
+	private void ReinitializedMovementGlyphProperties()
+	{
+		if(selectedMovableObject != null)
+		{
+			if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
+				movableObjectSprite.Material.Set("shader_parameter/line_thickness", 0);
+			if(selectedMovableObject.GetNode<PointLight2D>("PointLight2D") is PointLight2D movableObjectPointLight)
+				movableObjectPointLight.Enabled = false;
+			
+			selectedMovableObject = null;
+		}
+
+		isMovingObject = false;
+	}
+
 	private void HandleAction() 
 	{
 		bool isAiming = Input.IsActionPressed("aim_with_glyph");
+		if(!isAiming) return;
+
+		if(selectedCursorGlyph == CursorGlyph.LightGlyph)
+		{
+			HandleLightGlyph();
+		} else if(selectedCursorGlyph == CursorGlyph.MovementGlyph)
+		{
+			HandleMovementGlyph();
+		}
+	}
+
+	private void HandleLightGlyph()
+	{
 		bool isPlacing = Input.IsActionPressed("place_glyph");
 
-		if(!isPlacing || !isAiming) return;
+		if(!isPlacing) return;
 
-		if(selectedActions == CursorActions.SummonLightCrystal)
-		{
-			Node previousLightCrystal = GetTree().CurrentScene.GetNodeOrNull("LightCrystal");
-			LightCrystal lightCrystalInstance = lightCrystalScene.Instantiate<LightCrystal>();
-		
-			lightCrystalInstance.Position = Position;
+		Node previousLightCrystal = GetTree().CurrentScene.GetNodeOrNull("LightCrystal");
+		LightCrystal lightCrystalInstance = lightCrystalScene.Instantiate<LightCrystal>();
+	
+		lightCrystalInstance.Position = Position;
 
-			if(previousLightCrystal != null)
-				GetTree().CurrentScene.RemoveChild(previousLightCrystal);
+		if(previousLightCrystal != null)
+			GetTree().CurrentScene.RemoveChild(previousLightCrystal);
 
-			GetTree().CurrentScene.AddChild(lightCrystalInstance);
-		}
+		GetTree().CurrentScene.AddChild(lightCrystalInstance);
 
 		isCursorEnabled = false;
 		_cooldownTimer.Start();
 	}
 
+	private void HandleMovementGlyph()
+	{
+		if(selectedMovableObject == null) return;
+
+		if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
+			movableObjectSprite.Material.Set("shader_parameter/line_thickness", 1);
+		
+		bool isSelecting = Input.IsActionJustPressed("place_glyph");
+
+		if(isSelecting)
+		{
+			isMovingObject = !isMovingObject;
+
+			if(selectedMovableObject.GetNode<PointLight2D>("PointLight2D") is PointLight2D movableObjectPointLight)
+				movableObjectPointLight.Enabled = isMovingObject;
+		}
+
+		if(isMovingObject)
+		{		
+			Vector2 direction = (Position - selectedMovableObject.GlobalPosition).Normalized();
+
+			if(selectedMovableObject.Position.DistanceTo(Position) > 5) // Condition to avoid shaking
+				selectedMovableObject.ApplyCentralImpulse(direction * movementGlyphForce);
+		}
+		
+	}
+
 	public void _OnCooldownTimerTimeout()
 	{
 		isCursorEnabled = true;
+	}
+
+	public void _OnArea2dBodyEntered(Node2D body)
+	{
+		if(isMovingObject || selectedCursorGlyph != CursorGlyph.MovementGlyph) return;
+
+		if(body.IsInGroup("MovableObjects") && body is RigidBody2D rigidBody)
+			selectedMovableObject = rigidBody;
+	}
+
+	public void _OnArea2dBodyExited(Node2D body)
+	{
+		if(isMovingObject || body != selectedMovableObject) return;
+
+		ReinitializedMovementGlyphProperties();
 	}
 }
