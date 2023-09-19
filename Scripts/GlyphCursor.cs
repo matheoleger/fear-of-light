@@ -165,15 +165,15 @@ public partial class GlyphCursor : Node2D
 	{
 		if(selectedMovableObject == null) return;
 
-		selectedMovableObject.GetNode<Sprite2D>("Sprite2D").Material.Set("shader_parameter/line_thickness", 1);	// Cleaner code ?
+		selectedMovableObject.GetNode<Sprite2D>("Sprite2D").Material.Set("shader_parameter/line_thickness", 1);	// TODO: Cleaner code ?
 		
-		bool isSelecting = Input.IsActionPressed("place_glyph");
+		bool isSelecting = Input.IsActionJustPressed("place_glyph");
 
 		if(isSelecting)
 		{
 			isMovingObject = !isMovingObject;
 
-			//Clean ?
+			//TODO: Clean ? (add verification for PointLight2D)
 			selectedMovableObject.GetNode<PointLight2D>("PointLight2D").Enabled = isMovingObject;
 		}
 
@@ -182,7 +182,7 @@ public partial class GlyphCursor : Node2D
 			Vector2 direction = (Position - selectedMovableObject.GlobalPosition).Normalized();
 
 			if(selectedMovableObject.Position.DistanceTo(Position) > 5)
-				selectedMovableObject.ApplyCentralImpulse(direction * 300); // Clean code (add const ?)
+				selectedMovableObject.ApplyCentralImpulse(direction * 300); // TODO: Clean code (add const ?)
 		}
 		
 	}
