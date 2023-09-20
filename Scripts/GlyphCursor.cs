@@ -26,6 +26,7 @@ public partial class GlyphCursor : Node2D
 	private const float maxDistance = 130f;
 
 	private RigidBody2D selectedMovableObject;
+	private RigidBody2D detectedMovableObject;
 	private bool isMovingObject = false;
 
 	// Called when the node enters the scene tree for the first time.
@@ -45,12 +46,26 @@ public partial class GlyphCursor : Node2D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		HandleAim();
 
 		if(isCursorEnabled)
 			HandleAction();
+	}
+
+	private void ChangeCursorTexture()
+	{
+		switch(selectedCursorGlyph){
+			case CursorGlyph.LightGlyph:
+				_sprite2D.Texture = lightGlyphCursor;
+				_pointLight.Color = new Color("ff4e4f");
+				break;
+			case CursorGlyph.MovementGlyph:
+				_sprite2D.Texture = movementGlyphCursor;
+				_pointLight.Color = new Color("6efd99");
+				break;
+		}
 	}
 
 	private void HandleAim()
@@ -59,24 +74,31 @@ public partial class GlyphCursor : Node2D
 		{
 			Visible = true;
 			Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
-			Vector2 mousePosition = GetGlobalMousePosition();
 
-			Vector2 distance = mousePosition - GameManager.instance.player.Position;
-
-			if(distance.Length() > maxDistance)
-				Position = GameManager.instance.player.Position + distance.Normalized() * maxDistance;
-			else
-				Position = GameManager.instance.player.Position + distance;
-
+			MoveGlyphCursor();
 			ChangeCursorVisualState();
 			
 		} else {
 			Visible = false;
 			Input.MouseMode = Input.MouseModeEnum.Hidden;
 
+			Position = GameManager.instance.player.Position; // Reinitialize position to exit from the Area of movableObject.
+
 			if(selectedCursorGlyph == CursorGlyph.MovementGlyph)
 				ReinitializedMovementGlyphProperties();
 		}
+	}
+
+	private void MoveGlyphCursor()
+	{
+		Vector2 mousePosition = GetGlobalMousePosition();
+
+		Vector2 distance = mousePosition - GameManager.instance.player.Position;
+
+		if(distance.Length() > maxDistance)
+			Position = GameManager.instance.player.Position + distance.Normalized() * maxDistance;
+		else
+			Position = GameManager.instance.player.Position + distance;
 	}
 
 	private void ChangeCursorVisualState()
@@ -102,29 +124,11 @@ public partial class GlyphCursor : Node2D
 		}
 	}
 
-	private void ChangeCursorTexture()
-	{
-		switch(selectedCursorGlyph){
-			case CursorGlyph.LightGlyph:
-				_sprite2D.Texture = lightGlyphCursor;
-				_pointLight.Color = new Color("ff4e4f");
-				break;
-			case CursorGlyph.MovementGlyph:
-				_sprite2D.Texture = movementGlyphCursor;
-				_pointLight.Color = new Color("6efd99");
-				break;
-		}
-	}
-
 	private void ReinitializedMovementGlyphProperties()
 	{
 		if(selectedMovableObject != null)
 		{
-			if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
-				movableObjectSprite.Material.Set("shader_parameter/line_thickness", 0);
-			if(selectedMovableObject.GetNode<PointLight2D>("PointLight2D") is PointLight2D movableObjectPointLight)
-				movableObjectPointLight.Enabled = false;
-			
+			ChangeMovableObjectOutline(false);
 			selectedMovableObject = null;
 		}
 
@@ -147,7 +151,7 @@ public partial class GlyphCursor : Node2D
 
 	private void HandleLightGlyph()
 	{
-		bool isPlacing = Input.IsActionPressed("place_glyph");
+		bool isPlacing = Input.IsActionPressed("trigger_glyph");
 
 		if(!isPlacing) return;
 
@@ -167,19 +171,17 @@ public partial class GlyphCursor : Node2D
 
 	private void HandleMovementGlyph()
 	{
-		if(selectedMovableObject == null) return;
+		if(detectedMovableObject == null) return;
 
-		if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
-			movableObjectSprite.Material.Set("shader_parameter/line_thickness", 1);
+		selectedMovableObject ??= detectedMovableObject;
+
+		ChangeMovableObjectOutline(true);
 		
-		bool isSelecting = Input.IsActionJustPressed("place_glyph");
-
-		if(isSelecting)
+		bool isTriggered = Input.IsActionJustPressed("trigger_glyph");
+		if(isTriggered)
 		{
 			isMovingObject = !isMovingObject;
-
-			if(selectedMovableObject.GetNode<PointLight2D>("PointLight2D") is PointLight2D movableObjectPointLight)
-				movableObjectPointLight.Enabled = isMovingObject;
+			ChangeMovableObjectPointLight(isMovingObject);
 		}
 
 		if(isMovingObject)
@@ -189,7 +191,18 @@ public partial class GlyphCursor : Node2D
 			if(selectedMovableObject.Position.DistanceTo(Position) > 5) // Condition to avoid shaking
 				selectedMovableObject.ApplyCentralImpulse(direction * movementGlyphForce);
 		}
-		
+	}
+
+	private void ChangeMovableObjectOutline(bool isSelected)
+	{
+		if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
+			movableObjectSprite.Material.Set("shader_parameter/line_thickness", isSelected ? 1 : 0);
+	}
+
+	private void ChangeMovableObjectPointLight(bool isMoving)
+	{
+		if(selectedMovableObject.GetNode<PointLight2D>("PointLight2D") is PointLight2D movableObjectPointLight)
+			movableObjectPointLight.Enabled = isMoving;
 	}
 
 	public void _OnCooldownTimerTimeout()
@@ -202,13 +215,14 @@ public partial class GlyphCursor : Node2D
 		if(isMovingObject || selectedCursorGlyph != CursorGlyph.MovementGlyph) return;
 
 		if(body.IsInGroup("MovableObjects") && body is RigidBody2D rigidBody)
-			selectedMovableObject = rigidBody;
+			detectedMovableObject = rigidBody;
 	}
 
 	public void _OnArea2dBodyExited(Node2D body)
 	{
-		if(isMovingObject || body != selectedMovableObject) return;
+		if(isMovingObject || body != detectedMovableObject) return;
 
 		ReinitializedMovementGlyphProperties();
+		detectedMovableObject = null;
 	}
 }
