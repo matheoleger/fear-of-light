@@ -26,6 +26,7 @@ public partial class GlyphCursor : Node2D
 	private const float maxDistance = 130f;
 
 	private RigidBody2D selectedMovableObject;
+	private RigidBody2D detectedMovableObject;
 	private bool isMovingObject = false;
 
 	// Called when the node enters the scene tree for the first time.
@@ -73,6 +74,8 @@ public partial class GlyphCursor : Node2D
 		} else {
 			Visible = false;
 			Input.MouseMode = Input.MouseModeEnum.Hidden;
+
+			Position = GameManager.instance.player.Position; // Reinitialize position to exit from the Area of movableObject.
 
 			if(selectedCursorGlyph == CursorGlyph.MovementGlyph)
 				ReinitializedMovementGlyphProperties();
@@ -167,7 +170,9 @@ public partial class GlyphCursor : Node2D
 
 	private void HandleMovementGlyph()
 	{
-		if(selectedMovableObject == null) return;
+		if(detectedMovableObject == null) return;
+
+		selectedMovableObject ??= detectedMovableObject;
 
 		if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
 			movableObjectSprite.Material.Set("shader_parameter/line_thickness", 1);
@@ -202,13 +207,16 @@ public partial class GlyphCursor : Node2D
 		if(isMovingObject || selectedCursorGlyph != CursorGlyph.MovementGlyph) return;
 
 		if(body.IsInGroup("MovableObjects") && body is RigidBody2D rigidBody)
-			selectedMovableObject = rigidBody;
+		{
+			detectedMovableObject = rigidBody;
+		}
 	}
 
 	public void _OnArea2dBodyExited(Node2D body)
 	{
-		if(isMovingObject || body != selectedMovableObject) return;
+		if(isMovingObject || body != detectedMovableObject) return;
 
 		ReinitializedMovementGlyphProperties();
+		detectedMovableObject = null;
 	}
 }
