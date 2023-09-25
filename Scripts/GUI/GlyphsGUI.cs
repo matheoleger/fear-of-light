@@ -25,9 +25,14 @@ public partial class GlyphsGUI : Control
 			.Where(child => child is Panel)
 			.Select(child => child)
 			.Cast<Panel>()
-			.ToList(); //TODO: refacto ?
+			.ToList();
 
 		_hotbarApparitionCooldown = GetNode<Timer>("HotbarApparitionCooldown");
+
+		//Set the "visibility" to 0 for the start.
+		Color modulate = Modulate;
+		modulate.A = 0;
+		Modulate = modulate;
 	}
 
 
@@ -49,7 +54,8 @@ public partial class GlyphsGUI : Control
 
 		ChangeHotbarVisibility(isHotbarVisible);
 		
-		//TODO WARNING: Refacto
+		if(!isHotbarVisible) return;
+
 		Panel currentSelectedSlot = _slots[(int)_glyphCursor.SelectedCursorGlyph]; 
 		Panel previousSelectedSlot = _slots[(int)previousSelectedGlyph];
 
