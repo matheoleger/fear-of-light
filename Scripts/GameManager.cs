@@ -12,6 +12,8 @@ public partial class GameManager : Node
 
 	public Player player;
 
+	public GlyphCursor glyphCursor;
+
 	private string[] gameScenes = {
 		"TestScene"
 	};
@@ -21,6 +23,7 @@ public partial class GameManager : Node
 		instance = this;
 
 		player = GetTree().CurrentScene.GetNodeOrNull<Player>("Player");
+		glyphCursor = GetTree().CurrentScene.GetNodeOrNull<GlyphCursor>("GlyphCursor");
 
 		// [WARNING] Depends on the GameManager is not shared between scenes.
 		if(gameScenes.Contains<string>(GetTree().CurrentScene.Name))
