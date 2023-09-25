@@ -15,13 +15,18 @@ public partial class GlyphCursor : Node2D
 
 	private bool isCursorEnabled = true;
 
-	private enum CursorGlyph
+	public enum Glyph
 	{
 		LightGlyph,
 		MovementGlyph
 	}
 
-	private CursorGlyph selectedCursorGlyph = CursorGlyph.MovementGlyph;
+	private Glyph selectedCursorGlyph = Glyph.MovementGlyph;
+
+	public Glyph SelectedCursorGlyph {
+		get { return selectedCursorGlyph; }
+		set { selectedCursorGlyph = value; }
+	}
 
 	private const float maxDistance = 130f;
 
@@ -54,14 +59,14 @@ public partial class GlyphCursor : Node2D
 			HandleAction();
 	}
 
-	private void ChangeCursorTexture()
+	public void ChangeCursorTexture()
 	{
 		switch(selectedCursorGlyph){
-			case CursorGlyph.LightGlyph:
+			case Glyph.LightGlyph:
 				_sprite2D.Texture = lightGlyphCursor;
 				_pointLight.Color = new Color("ff4e4f");
 				break;
-			case CursorGlyph.MovementGlyph:
+			case Glyph.MovementGlyph:
 				_sprite2D.Texture = movementGlyphCursor;
 				_pointLight.Color = new Color("6efd99");
 				break;
@@ -84,7 +89,7 @@ public partial class GlyphCursor : Node2D
 
 			Position = GameManager.instance.player.Position; // Reinitialize position to exit from the Area of movableObject.
 
-			if(selectedCursorGlyph == CursorGlyph.MovementGlyph)
+			if(selectedCursorGlyph == Glyph.MovementGlyph)
 				ReinitializedMovementGlyphProperties();
 		}
 	}
@@ -140,10 +145,10 @@ public partial class GlyphCursor : Node2D
 		bool isAiming = Input.IsActionPressed("aim_with_glyph");
 		if(!isAiming) return;
 
-		if(selectedCursorGlyph == CursorGlyph.LightGlyph)
+		if(selectedCursorGlyph == Glyph.LightGlyph)
 		{
 			HandleLightGlyph();
-		} else if(selectedCursorGlyph == CursorGlyph.MovementGlyph)
+		} else if(selectedCursorGlyph == Glyph.MovementGlyph)
 		{
 			HandleMovementGlyph();
 		}
@@ -212,7 +217,7 @@ public partial class GlyphCursor : Node2D
 
 	public void _OnArea2dBodyEntered(Node2D body)
 	{
-		if(isMovingObject || selectedCursorGlyph != CursorGlyph.MovementGlyph) return;
+		if(isMovingObject || selectedCursorGlyph != Glyph.MovementGlyph) return;
 
 		if(body.IsInGroup("MovableObjects") && body is RigidBody2D rigidBody)
 			detectedMovableObject = rigidBody;

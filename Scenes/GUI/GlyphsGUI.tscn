@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl8ogniavna3p"]
+
+[ext_resource type="Texture2D" uid="uid://c5ohccckjo22v" path="res://Resources/Images/light-glyph-v1.png" id="1_golc2"]
+[ext_resource type="Texture2D" uid="uid://fqmejppy3uds" path="res://Resources/Images/GUI/GUI-capacity-selector-unselected-v1.png" id="1_ltwp7"]
+[ext_resource type="Script" path="res://Scripts/GUI/GlyphsGUI.cs" id="1_rbp1u"]
+[ext_resource type="Texture2D" uid="uid://cw1wlh6kr413j" path="res://Resources/Images/movement-glyph-v1.png" id="2_rmtgw"]
+[ext_resource type="Texture2D" uid="uid://bs45gbv5obxty" path="res://Resources/Images/GUI/GUI-capacity-selector-selected-v1.png" id="5_3ikqw"]
+
+[node name="GlyphsGUI" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rbp1u")
+
+[node name="GlyphsHotbar" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -328.0
+offset_top = -120.0
+offset_right = -224.0
+offset_bottom = -88.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(3, 3)
+columns = 3
+
+[node name="Slot" type="Panel" parent="GlyphsHotbar"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="SlotBackground" type="TextureRect" parent="GlyphsHotbar/Slot"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_ltwp7")
+
+[node name="SelectIndicatorTexture" type="TextureRect" parent="GlyphsHotbar/Slot"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("5_3ikqw")
+
+[node name="Glyph" type="TextureRect" parent="GlyphsHotbar/Slot"]
+layout_mode = 0
+texture = ExtResource("1_golc2")
+
+[node name="Slot2" type="Panel" parent="GlyphsHotbar"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="SlotBackground" type="TextureRect" parent="GlyphsHotbar/Slot2"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_ltwp7")
+
+[node name="SelectIndicatorTexture" type="TextureRect" parent="GlyphsHotbar/Slot2"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("5_3ikqw")
+
+[node name="Glyph" type="TextureRect" parent="GlyphsHotbar/Slot2"]
+layout_mode = 0
+texture = ExtResource("2_rmtgw")
+
+[node name="Slot3" type="Panel" parent="GlyphsHotbar"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="SlotBackground" type="TextureRect" parent="GlyphsHotbar/Slot3"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_ltwp7")
+
+[node name="SelectIndicatorTexture" type="TextureRect" parent="GlyphsHotbar/Slot3"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("5_3ikqw")
+
+[node name="Glyph" type="TextureRect" parent="GlyphsHotbar/Slot3"]
+layout_mode = 0
+
+[node name="HotbarApparitionCooldown" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="HotbarApparitionCooldown" to="." method="_OnHotbarApparitionCooldownTimeout"]
