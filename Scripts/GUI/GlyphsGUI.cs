@@ -34,31 +34,30 @@ public partial class GlyphsGUI : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		HandleVisibility();
+		HandleSelection();
+	}
 
+	private void HandleVisibility()
+	{
 		bool isAimed = Input.IsActionJustPressed("aim_with_glyph");
-
 		if(isAimed) 
 		{
 			isHotbarVisible = true;
 			_hotbarApparitionCooldown.Start();
 		}
 
-		// TODO: Visible when we aim or when we use the mousewheel/keyboard numbers. Else, it's hidden.
-		ChangeVisualState(isHotbarVisible);
-
-		HandleSelection();
-
+		ChangeHotbarVisibility(isHotbarVisible);
+		
 		//TODO WARNING: Refacto
-
 		Panel currentSelectedSlot = _slots[(int)_glyphCursor.SelectedCursorGlyph]; 
 		Panel previousSelectedSlot = _slots[(int)previousSelectedGlyph];
 
-		ChangeSelectorVisualState(previousSelectedSlot, false);
-		ChangeSelectorVisualState(currentSelectedSlot, true);
-
+		ChangeSelectorVisibility(previousSelectedSlot, false);
+		ChangeSelectorVisibility(currentSelectedSlot, true);
 	}
 
-	private void ChangeVisualState(bool isVisible)
+	private void ChangeHotbarVisibility(bool isVisible)
 	{
 		const float disabledCursorModulateOpacity = 0f;
 
@@ -76,6 +75,8 @@ public partial class GlyphsGUI : Control
 
 	private void HandleSelection()
 	{
+		HandleShortcuts();
+
 		bool isSelectNextGlyph = Input.IsActionJustPressed("select_next_glyph");
 		bool isSelectPreviousGlyph = Input.IsActionJustPressed("select_previous_glyph");
 
@@ -87,16 +88,29 @@ public partial class GlyphsGUI : Control
 		{
 			int selectedGlyphNumber =  (int)(_glyphCursor.SelectedCursorGlyph + 1) % numberOfGlyphs;
 			SelectGlyph((GlyphCursor.Glyph)selectedGlyphNumber);
-			// ChangeVisualState(isSelectNextGlyph);
 		} else if (isSelectPreviousGlyph)
 		{
-			// ChangeVisualState(isSelectPreviousGlyph);
 			int selectedGlyphNumber =  (int)(_glyphCursor.SelectedCursorGlyph - 1 + numberOfGlyphs) % numberOfGlyphs;
 			SelectGlyph((GlyphCursor.Glyph)selectedGlyphNumber);
 		}
 
-		isHotbarVisible = true;
-		_hotbarApparitionCooldown.Start();
+		SetHotbarVisible();
+	}
+
+	private void HandleShortcuts()
+	{
+		if(Input.IsActionJustPressed("light_glyph_shortcut"))
+		{
+			SelectGlyph(GlyphCursor.Glyph.LightGlyph);
+
+			SetHotbarVisible();
+
+		} else if(Input.IsActionJustPressed("movement_glyph_shortcut"))
+		{
+			SelectGlyph(GlyphCursor.Glyph.MovementGlyph);
+
+			SetHotbarVisible();
+		}
 	}
 
 	private void SelectGlyph(GlyphCursor.Glyph selectedGlyph)
@@ -105,12 +119,9 @@ public partial class GlyphsGUI : Control
 
 		_glyphCursor.SelectedCursorGlyph = selectedGlyph;
 		_glyphCursor.ChangeCursorTexture();
-
-		GD.Print(_glyphCursor.SelectedCursorGlyph);
-
 	}
 
-	private void ChangeSelectorVisualState(Panel slot, bool isEnabled)
+	private void ChangeSelectorVisibility(Panel slot, bool isEnabled)
 	{
 		const float disabledCursorModulateOpacity = 0f;
 
@@ -124,6 +135,13 @@ public partial class GlyphsGUI : Control
 			modulate.A += 0.1f;
 			slot.GetNode<TextureRect>("SelectIndicatorTexture").Modulate = modulate;
 		}
+	}
+
+	private void SetHotbarVisible()
+	{
+		//Show the hotbar for {timer} seconds
+		isHotbarVisible = true;
+		_hotbarApparitionCooldown.Start();
 	}
 
 	public void _OnHotbarApparitionCooldownTimeout()
