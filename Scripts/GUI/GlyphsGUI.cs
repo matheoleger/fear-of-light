@@ -7,27 +7,27 @@ public partial class GlyphsGUI : Control
 {
 
 	GlyphCursor _glyphCursor;
-
 	GridContainer _glyphsHotbar;
-
-	// TextureRect _selectedTexture;
-
-	// Godot.Collections.Array<Node> _slots;
 	List<Panel> _slots;
 
+	Timer _hotbarApparitionCooldown;
+
 	GlyphCursor.Glyph previousSelectedGlyph;
+
+	bool isHotbarVisible = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_glyphCursor = GameManager.instance.glyphCursor;
-		// _selectedTexture = GetNode<TextureRect>("SelectedTexture");
 		_glyphsHotbar = GetNode<GridContainer>("GlyphsHotbar");
 		_slots = _glyphsHotbar.GetChildren()
 			.Where(child => child is Panel)
 			.Select(child => child)
 			.Cast<Panel>()
 			.ToList(); //TODO: refacto ?
+
+		_hotbarApparitionCooldown = GetNode<Timer>("HotbarApparitionCooldown");
 	}
 
 
@@ -35,16 +35,20 @@ public partial class GlyphsGUI : Control
 	public override void _Process(double delta)
 	{
 
-		bool isAiming = Input.IsActionPressed("aim_with_glyph");
+		bool isAimed = Input.IsActionJustPressed("aim_with_glyph");
+
+		if(isAimed) 
+		{
+			isHotbarVisible = true;
+			_hotbarApparitionCooldown.Start();
+		}
 
 		// TODO: Visible when we aim or when we use the mousewheel/keyboard numbers. Else, it's hidden.
-		ChangeVisualState(isAiming);
+		ChangeVisualState(isHotbarVisible);
 
 		HandleSelection();
 
 		//TODO WARNING: Refacto
-
-		// if(previousSelectedGlyph == _glyphCursor.SelectedCursorGlyph) return;
 
 		Panel currentSelectedSlot = _slots[(int)_glyphCursor.SelectedCursorGlyph]; 
 		Panel previousSelectedSlot = _slots[(int)previousSelectedGlyph];
@@ -83,13 +87,16 @@ public partial class GlyphsGUI : Control
 		{
 			int selectedGlyphNumber =  (int)(_glyphCursor.SelectedCursorGlyph + 1) % numberOfGlyphs;
 			SelectGlyph((GlyphCursor.Glyph)selectedGlyphNumber);
-			ChangeVisualState(isSelectNextGlyph);
+			// ChangeVisualState(isSelectNextGlyph);
 		} else if (isSelectPreviousGlyph)
 		{
-			ChangeVisualState(isSelectPreviousGlyph);
+			// ChangeVisualState(isSelectPreviousGlyph);
 			int selectedGlyphNumber =  (int)(_glyphCursor.SelectedCursorGlyph - 1 + numberOfGlyphs) % numberOfGlyphs;
 			SelectGlyph((GlyphCursor.Glyph)selectedGlyphNumber);
 		}
+
+		isHotbarVisible = true;
+		_hotbarApparitionCooldown.Start();
 	}
 
 	private void SelectGlyph(GlyphCursor.Glyph selectedGlyph)
@@ -117,5 +124,10 @@ public partial class GlyphsGUI : Control
 			modulate.A += 0.1f;
 			slot.GetNode<TextureRect>("SelectIndicatorTexture").Modulate = modulate;
 		}
+	}
+
+	public void _OnHotbarApparitionCooldownTimeout()
+	{
+		isHotbarVisible = false;
 	}
 }

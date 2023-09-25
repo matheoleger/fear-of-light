@@ -116,3 +116,8 @@ texture = ExtResource("5_3ikqw")
 
 [node name="Glyph" type="TextureRect" parent="GlyphsHotbar/Slot3"]
 layout_mode = 0
+
+[node name="HotbarApparitionCooldown" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="HotbarApparitionCooldown" to="." method="_OnHotbarApparitionCooldownTimeout"]
