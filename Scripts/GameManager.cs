@@ -18,6 +18,8 @@ public partial class GameManager : Node
 		"TestScene"
 	};
 
+	public bool isGameLoaded = false;
+
 	public override void _Ready()
 	{
 		instance = this;
@@ -33,5 +35,14 @@ public partial class GameManager : Node
 	public override void _Process(double delta)
 	{
 		// [TODO] Add verification if the player is in "playmode" and not in "menu" or "pausemode"
+
+		if(gameScenes.Contains<string>(GetTree().CurrentScene.Name)) 
+		{
+			player ??= GetTree().CurrentScene.GetNodeOrNull<Player>("Player");
+			glyphCursor ??= GetTree().CurrentScene.GetNodeOrNull<GlyphCursor>("GlyphCursor");
+
+			isGameLoaded = true;
+		}
+
 	}
 }

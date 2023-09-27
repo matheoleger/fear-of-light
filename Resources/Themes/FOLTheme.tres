@@ -1,0 +1,26 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://bad8rpc1fsf4q"]
+
+[ext_resource type="FontFile" uid="uid://che43ewbk4yyx" path="res://Resources/Fonts/dogicapixel.otf" id="1_rd2hx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sb6yl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gbla3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rr3kv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a3bnj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1hrrl"]
+
+[resource]
+default_font = ExtResource("1_rd2hx")
+default_font_size = 16
+Button/colors/font_hover_color = Color(0.992157, 0.431373, 0.431373, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0)
+Button/colors/icon_normal_color = Color(1, 1, 1, 0)
+Button/font_sizes/font_size = 32
+Button/styles/disabled = SubResource("StyleBoxEmpty_sb6yl")
+Button/styles/focus = SubResource("StyleBoxEmpty_gbla3")
+Button/styles/hover = SubResource("StyleBoxEmpty_rr3kv")
+Button/styles/normal = SubResource("StyleBoxEmpty_a3bnj")
+Button/styles/pressed = SubResource("StyleBoxEmpty_1hrrl")
