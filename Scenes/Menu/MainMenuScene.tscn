@@ -1,6 +1,5 @@
-[gd_scene load_steps=237 format=3 uid="uid://bpv4xujdb6j24"]
+[gd_scene load_steps=236 format=3 uid="uid://bpv4xujdb6j24"]
 
-[ext_resource type="Texture2D" uid="uid://umcwyp3j64oq" path="res://Resources/Images/background-v1-layer-0.png" id="1_p88dx"]
 [ext_resource type="Script" path="res://Scripts/Menu/MainMenuScene.cs" id="1_t0kyj"]
 [ext_resource type="Texture2D" uid="uid://jrhgkmjhjq3c" path="res://Resources/Animations/Menu/menu-bg-anim-v1-part1.png" id="2_hs45r"]
 [ext_resource type="Texture2D" uid="uid://bhjwxt0hnn8vq" path="res://Resources/Animations/Menu/menu-bg-anim-v1-part2.png" id="3_uescl"]
@@ -1621,14 +1620,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_t0kyj")
 
-[node name="BackgroundColor" type="TextureRect" parent="."]
+[node name="BackgroundColor" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_p88dx")
+color = Color(0.0352941, 0.0352941, 0.0352941, 1)
 
 [node name="AnimationBackgroundControl" type="Control" parent="."]
 layout_mode = 1
@@ -1650,9 +1649,8 @@ scale = Vector2(4.82, 4.82)
 sprite_frames = SubResource("SpriteFrames_gjv7e")
 autoplay = "default"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="MainMenuUI" parent="CanvasLayer" instance=ExtResource("5_xyyem")]
+[node name="MainMenuUI" parent="." instance=ExtResource("5_xyyem")]
+layout_mode = 1
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_lc15h")
