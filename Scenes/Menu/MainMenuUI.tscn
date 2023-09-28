@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bnbxfk15pwext"]
+[gd_scene load_steps=8 format=3 uid="uid://bnbxfk15pwext"]
 
 [ext_resource type="Theme" uid="uid://bad8rpc1fsf4q" path="res://Resources/Themes/FOLTheme.tres" id="1_wlcd7"]
 [ext_resource type="Script" path="res://Scripts/Menu/MainMenuUI.cs" id="2_brl53"]
-[ext_resource type="Texture2D" uid="uid://c5ohccckjo22v" path="res://Resources/Images/light-glyph-v1.png" id="3_vfwyr"]
 [ext_resource type="Texture2D" uid="uid://med4j526j77k" path="res://Resources/Images/Logo/demi-cercle-little.png" id="4_8o0lp"]
 [ext_resource type="Texture2D" uid="uid://csy7nubxt5mch" path="res://Resources/Images/Logo/fear-of-light-logo-little.png" id="5_inwdm"]
 [ext_resource type="Texture2D" uid="uid://d34mdfs7hmo5q" path="res://Resources/Images/Logo/main-text-element-little.png" id="6_032e8"]
@@ -26,9 +25,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 300.0
+offset_left = 400.0
 offset_top = -40.0
-offset_right = 558.0
+offset_right = 658.0
 offset_bottom = 178.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pkhnf")
@@ -42,29 +41,25 @@ alignment = 1
 layout_mode = 2
 disabled = true
 text = "Continue"
-icon = ExtResource("3_vfwyr")
 
 [node name="NewGameButton" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "New Game"
-icon = ExtResource("3_vfwyr")
 
 [node name="OptionsButton" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Options"
-icon = ExtResource("3_vfwyr")
 
 [node name="QuitButton" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
-icon = ExtResource("3_vfwyr")
 
 [node name="Logo" type="Control" parent="."]
 texture_filter = 1
 anchors_preset = 0
-offset_left = 16.0
+offset_left = 92.285
 offset_top = 24.0
-offset_right = 238.0
+offset_right = 314.285
 offset_bottom = 100.0
 scale = Vector2(4, 4)
 
@@ -96,24 +91,26 @@ flip_h = true
 
 [node name="Text" type="Control" parent="Logo"]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 13.0
+offset_top = 38.745
+offset_right = 211.0
+offset_bottom = 62.745
 
 [node name="TextureRect4" type="TextureRect" parent="Logo/Text"]
 layout_mode = 2
-offset_left = 18.0
-offset_top = 48.0
-offset_right = 208.0
-offset_bottom = 88.0
+offset_left = 6.0
+offset_top = 2.0
+offset_right = 196.0
+offset_bottom = 42.0
 texture = ExtResource("6_032e8")
 stretch_mode = 2
 
 [node name="TextureRect5" type="TextureRect" parent="Logo/Text"]
 layout_mode = 2
-offset_left = 14.0
-offset_top = 48.0
-offset_right = 204.0
-offset_bottom = 88.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 192.0
+offset_bottom = 42.0
 texture = ExtResource("7_cf3hw")
 stretch_mode = 2
 

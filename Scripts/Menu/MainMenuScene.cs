@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-public partial class MainMenuScene : Node2D
+public partial class MainMenuScene : Control
 {
 
-	private AudioStreamPlayer2D _backgroundMusicPlayer;
-
+	private AudioStreamPlayer _backgroundMusicPlayer;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_backgroundMusicPlayer = GetNode<AudioStreamPlayer2D>("BackgroundMusicPlayer");
+		_backgroundMusicPlayer = GetNode<AudioStreamPlayer>("BackgroundMusicPlayer");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
