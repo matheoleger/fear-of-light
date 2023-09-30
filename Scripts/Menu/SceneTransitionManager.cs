@@ -7,7 +7,7 @@ public partial class SceneTransitionManager : CanvasLayer
 	private AnimationPlayer _animationPlayer;
 
     [Signal]
-    public delegate void TransitionedEventHandler();
+    public delegate void OnStartTransitionEventHandler();
 
 	private string targetedScene;
 
@@ -26,17 +26,12 @@ public partial class SceneTransitionManager : CanvasLayer
 	public void ChangeScene(string target)
 	{
 		_animationPlayer.Play("fade_in");
+		EmitSignal(SignalName.OnStartTransition);
 		targetedScene = target;
 	}
 
 	public void _OnAnimationPlayerAnimationFinished(StringName animName)
 	{
-		// if(animName == "fade_in")
-		// {
-		// 	EmitSignal(SignalName.Transitioned, this);
-		// 	_animationPlayer.Play("fade_out");
-		// }
-
 		if(animName != "fade_in") return;
 
 		GetTree().ChangeSceneToFile(targetedScene);
