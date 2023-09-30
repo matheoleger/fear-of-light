@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class TransitionScreen : CanvasLayer
+public partial class SceneTransitionManager : CanvasLayer
 {
 
 	private AnimationPlayer _animationPlayer;
@@ -9,33 +9,37 @@ public partial class TransitionScreen : CanvasLayer
     [Signal]
     public delegate void TransitionedEventHandler();
 
+	private string targetedScene;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		Transition();
+		_animationPlayer.Play("fade_out");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-
 	}
 
-	private void Transition()
+	public void ChangeScene(string target)
 	{
 		_animationPlayer.Play("fade_in");
+		targetedScene = target;
 	}
 
 	public void _OnAnimationPlayerAnimationFinished(StringName animName)
 	{
-		if(animName == "fade_in")
-		{
-			EmitSignal(SignalName.Transitioned, this);
-			_animationPlayer.Play("fade_out");
-		} else if(animName == "fade_out")
-		{
-			
-		}
+		// if(animName == "fade_in")
+		// {
+		// 	EmitSignal(SignalName.Transitioned, this);
+		// 	_animationPlayer.Play("fade_out");
+		// }
+
+		if(animName != "fade_in") return;
+
+		GetTree().ChangeSceneToFile(targetedScene);
+		_animationPlayer.Play("fade_out");
 	}
 }

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Fear Of Light"
-run/main_scene="res://Scenes/TestScene.tscn"
+run/main_scene="res://Scenes/Menu/MainMenuScene.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 boot_splash/bg_color=Color(0.0352941, 0.0352941, 0.0352941, 1)
 boot_splash/show_image=false
@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*res://Scripts/GameManager.cs"
+SceneTransitionManager="*res://Scenes/Menu/SceneTransitionManager.tscn"
 
 [display]
 
