@@ -54,6 +54,8 @@ public partial class GameManager : Node
 		} else {
 			isGamePaused = false;
 			Input.MouseMode = Input.MouseModeEnum.Visible;
+			player = null;
+			glyphCursor = null;
 		}
 	}
 

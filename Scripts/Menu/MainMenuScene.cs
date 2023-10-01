@@ -40,6 +40,8 @@ public partial class MainMenuScene : Control
 
 	public void HandleSceneTransition()
 	{
-		_animationPlayer.Play("music_fade_out");
+		// TODO: Refacto the signal system because I need to remove the signal when it's unloaded/destroyed.
+		_animationPlayer?.Play("music_fade_out");
+		_animationPlayer = null;
 	}
 }
