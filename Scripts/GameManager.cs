@@ -48,15 +48,13 @@ public partial class GameManager : Node
 			if(isGamePaused)
 			{
 				Input.MouseMode = Input.MouseModeEnum.Visible;
-				GD.Print("JE SUIS EN PAUSE LA", Input.MouseMode);
-
 			}
+		
+			HandleGamePause();
 		} else {
 			isGamePaused = false;
 			Input.MouseMode = Input.MouseModeEnum.Visible;
 		}
-
-		HandleGamePause();
 	}
 
 	private void HandleGamePause()
