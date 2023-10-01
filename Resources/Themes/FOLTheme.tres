@@ -24,3 +24,5 @@ Button/styles/focus = SubResource("StyleBoxEmpty_gbla3")
 Button/styles/hover = SubResource("StyleBoxEmpty_rr3kv")
 Button/styles/normal = SubResource("StyleBoxEmpty_a3bnj")
 Button/styles/pressed = SubResource("StyleBoxEmpty_1hrrl")
+MenuButton/colors/font_hover_color = Color(0.992157, 0.431373, 0.431373, 1)
+MenuButton/font_sizes/font_size = 32

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 public partial class GameManager : Node
@@ -19,6 +20,7 @@ public partial class GameManager : Node
 	};
 
 	public bool isGameLoaded = false;
+	public bool isGamePaused = false;
 
 	public override void _Ready()
 	{
@@ -27,9 +29,9 @@ public partial class GameManager : Node
 		player = GetTree().CurrentScene.GetNodeOrNull<Player>("Player");
 		glyphCursor = GetTree().CurrentScene.GetNodeOrNull<GlyphCursor>("GlyphCursor");
 
-		// [WARNING] Depends on the GameManager is not shared between scenes.
-		if(gameScenes.Contains<string>(GetTree().CurrentScene.Name))
-			Input.MouseMode = Input.MouseModeEnum.Hidden;
+		ProcessMode = ProcessModeEnum.Always;
+
+		Input.MouseMode = Input.MouseModeEnum.Visible;
 	}
 
 	public override void _Process(double delta)
@@ -41,8 +43,24 @@ public partial class GameManager : Node
 			player ??= GetTree().CurrentScene.GetNodeOrNull<Player>("Player");
 			glyphCursor ??= GetTree().CurrentScene.GetNodeOrNull<GlyphCursor>("GlyphCursor");
 
-			isGameLoaded = true;
+			if(!isGameLoaded) isGameLoaded = true;
+
+			if(isGamePaused)
+			{
+				Input.MouseMode = Input.MouseModeEnum.Visible;
+				GD.Print("JE SUIS EN PAUSE LA", Input.MouseMode);
+
+			}
+		} else {
+			isGamePaused = false;
+			Input.MouseMode = Input.MouseModeEnum.Visible;
 		}
 
+		HandleGamePause();
+	}
+
+	private void HandleGamePause()
+	{
+		GetTree().Paused = isGamePaused;
 	}
 }

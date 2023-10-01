@@ -20,7 +20,8 @@ public partial class MainMenuScene : Control
 
 		_sceneTransitionManager.OnStartTransition += HandleSceneTransition;
 
-		InstantiateSplashScreen();
+		if(!GameManager.instance.isGameLoaded)
+			InstantiateSplashScreen();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
