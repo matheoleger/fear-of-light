@@ -1,0 +1,173 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhayouq0djbbr"]
+
+[ext_resource type="Theme" uid="uid://bad8rpc1fsf4q" path="res://Resources/Themes/FOLTheme.tres" id="1_72mpl"]
+
+[node name="OptionsMenu" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_72mpl")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+offset_right = 960.0
+offset_bottom = 512.0
+
+[node name="General" type="TabBar" parent="TabContainer"]
+layout_mode = 2
+
+[node name="Controls" type="TabBar" parent="TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls"]
+layout_mode = 2
+offset_left = 10.0
+offset_top = 130.0
+offset_right = 276.0
+offset_bottom = 256.0
+theme_override_constants/separation = 15
+
+[node name="MovementInputs" type="Label" parent="TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.992157, 0.431373, 0.431373, 1)
+text = "- Movement inputs -"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 30
+
+[node name="Labels" type="VBoxContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MoveUp" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Move up"
+
+[node name="MoveDown" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Move down"
+
+[node name="MoveLeft" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Move left"
+
+[node name="MoveRight" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Move right"
+
+[node name="Dash" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Dash"
+
+[node name="LineEdits" type="VBoxContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MoveUp" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 6
+placeholder_text = "Z"
+alignment = 1
+
+[node name="MoveDown" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+layout_mode = 2
+placeholder_text = "S"
+alignment = 1
+
+[node name="MoveLeft" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+layout_mode = 2
+placeholder_text = "Q"
+alignment = 1
+
+[node name="MoveRight" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+layout_mode = 2
+placeholder_text = "D"
+alignment = 1
+
+[node name="Dash" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+layout_mode = 2
+placeholder_text = "Space"
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+
+[node name="GlyphInputs" type="Label" parent="TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.992157, 0.431373, 0.431373, 1)
+text = "- Glyph inputs -"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 30
+
+[node name="Labels" type="VBoxContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Previous" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+layout_mode = 2
+text = "Select previous glyph"
+
+[node name="Next" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+layout_mode = 2
+text = "Select next glyph"
+
+[node name="LightGlyph" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+layout_mode = 2
+text = "Select Light glyph"
+
+[node name="MovementGlyph" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+layout_mode = 2
+text = "Select Movement glyph"
+
+[node name="LineEdits" type="VBoxContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Previous" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+layout_mode = 2
+theme_override_constants/minimum_character_width = 6
+placeholder_text = "Mousewheeldown"
+alignment = 1
+
+[node name="Next" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+layout_mode = 2
+placeholder_text = "Mousewheelup"
+alignment = 1
+
+[node name="LightGlyph" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+layout_mode = 2
+placeholder_text = "1"
+alignment = 1
+
+[node name="MovementGlyph" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+layout_mode = 2
+placeholder_text = "2"
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 4.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_top = 512.0
+offset_right = 148.0
+offset_bottom = 552.0
+text = "< Back"
