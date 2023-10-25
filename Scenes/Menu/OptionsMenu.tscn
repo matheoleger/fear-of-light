@@ -48,6 +48,7 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="Controls" type="TabBar" parent="Options/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Options/TabContainer/Controls"]

@@ -50,7 +50,7 @@ public partial class OptionsControlsInput : Button
 
 	public void _OnPressed()
 	{
-		if(canChangeKey) return;
+		if(canChangeKey || Input.IsKeyPressed(Key.Space)) return;
 
 		canChangeKey = true;
 		Text = "Press key";

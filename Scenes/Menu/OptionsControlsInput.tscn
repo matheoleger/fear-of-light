@@ -22,6 +22,7 @@ offset_right = 300.0
 offset_bottom = 33.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_1olpo")
 theme_override_styles/hover = SubResource("StyleBoxFlat_eqyin")
+action_mode = 0
 text = "Press key"
 text_overrun_behavior = 3
 script = ExtResource("1_q5rv3")
