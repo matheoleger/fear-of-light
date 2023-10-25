@@ -1,10 +1,11 @@
-[gd_scene load_steps=239 format=3 uid="uid://bpv4xujdb6j24"]
+[gd_scene load_steps=240 format=3 uid="uid://bpv4xujdb6j24"]
 
 [ext_resource type="Script" path="res://Scripts/Menu/MainMenuScene.cs" id="1_t0kyj"]
 [ext_resource type="Texture2D" uid="uid://jrhgkmjhjq3c" path="res://Resources/Animations/Menu/menu-bg-anim-v1-part1.png" id="2_hs45r"]
 [ext_resource type="Texture2D" uid="uid://bhjwxt0hnn8vq" path="res://Resources/Animations/Menu/menu-bg-anim-v1-part2.png" id="3_uescl"]
 [ext_resource type="Texture2D" uid="uid://by5vvt2muwgc0" path="res://Resources/Animations/Menu/menu-bg-anim-v1-part3.png" id="4_i71cv"]
 [ext_resource type="PackedScene" uid="uid://bnbxfk15pwext" path="res://Scenes/Menu/MainMenuUI.tscn" id="5_xyyem"]
+[ext_resource type="PackedScene" uid="uid://bhayouq0djbbr" path="res://Scenes/Menu/OptionsMenu.tscn" id="6_csxbh"]
 [ext_resource type="AudioStream" uid="uid://dacv40cddff6n" path="res://Resources/Audios/Musics/fear-of-light-menu-v1.wav" id="6_lc15h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wbvo8"]
@@ -1688,6 +1689,9 @@ sprite_frames = SubResource("SpriteFrames_gjv7e")
 autoplay = "default"
 
 [node name="MainMenuUI" parent="." instance=ExtResource("5_xyyem")]
+layout_mode = 1
+
+[node name="OptionsMenu" parent="MainMenuUI" instance=ExtResource("6_csxbh")]
 layout_mode = 1
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]

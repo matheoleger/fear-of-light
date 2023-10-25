@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cakag4b77owda"]
+[gd_scene load_steps=9 format=3 uid="uid://cakag4b77owda"]
 
 [ext_resource type="Theme" uid="uid://bad8rpc1fsf4q" path="res://Resources/Themes/FOLTheme.tres" id="1_rboxo"]
 [ext_resource type="Script" path="res://Scripts/Menu/PauseMenu.cs" id="2_kt1vl"]
 [ext_resource type="Texture2D" uid="uid://med4j526j77k" path="res://Resources/Images/Logo/demi-cercle-little.png" id="2_qwfl1"]
+[ext_resource type="PackedScene" uid="uid://bhayouq0djbbr" path="res://Scenes/Menu/OptionsMenu.tscn" id="4_svu67"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jcc0x"]
 
@@ -153,6 +154,9 @@ layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_mt1rr")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_mt1rr")
 text = "To Dekstop"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("4_svu67")]
+layout_mode = 1
 
 [connection signal="pressed" from="MenuButtons/VBoxContainer/ResumeButton" to="." method="_OnResumeButtonPressed"]
 [connection signal="pressed" from="MenuButtons/VBoxContainer/OptionsButton" to="." method="_OnOptionsButtonPressed"]

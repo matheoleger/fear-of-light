@@ -6,12 +6,14 @@ public partial class PauseMenu : Control
 
 	private SceneTransitionManager _sceneTransitionManager;
 	private PanelContainer _quitSubMenu;
+	private OptionsMenu _optionsMenu;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_sceneTransitionManager = GetNode<SceneTransitionManager>("/root/SceneTransitionManager");
 		_quitSubMenu = GetNode<PanelContainer>("QuitSubMenu");
+		_optionsMenu = GetNode<OptionsMenu>("OptionsMenu");
 
 		Visible = false;
 	}
@@ -40,7 +42,7 @@ public partial class PauseMenu : Control
 
 	public void _OnOptionsButtonPressed()
 	{
-
+		_optionsMenu.ChangeVisibility(true);
 	}
 
 	public void _OnQuitButtonPressed()
