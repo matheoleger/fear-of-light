@@ -14,7 +14,7 @@
 
 [resource]
 default_font = ExtResource("1_rd2hx")
-default_font_size = 16
+default_font_size = 32
 Button/colors/font_hover_color = Color(0.992157, 0.431373, 0.431373, 1)
 Button/colors/icon_disabled_color = Color(1, 1, 1, 0)
 Button/colors/icon_normal_color = Color(1, 1, 1, 0)
@@ -26,3 +26,6 @@ Button/styles/normal = SubResource("StyleBoxEmpty_a3bnj")
 Button/styles/pressed = SubResource("StyleBoxEmpty_1hrrl")
 MenuButton/colors/font_hover_color = Color(0.992157, 0.431373, 0.431373, 1)
 MenuButton/font_sizes/font_size = 32
+TabBar/font_sizes/font_size = 32
+TabContainer/constants/side_margin = 0
+TabContainer/font_sizes/font_size = 32

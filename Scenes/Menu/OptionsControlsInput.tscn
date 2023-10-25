@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://df2ovsug76nep"]
+
+[ext_resource type="Script" path="res://Scripts/Menu/OptionsControlsInput.cs" id="1_q5rv3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1olpo"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eqyin"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[node name="OptionsControlsButton" type="Button"]
+offset_right = 128.0
+offset_bottom = 33.0
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_1olpo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eqyin")
+text = "Press key"
+text_overrun_behavior = 3
+script = ExtResource("1_q5rv3")
+action = "dash"
+
+[connection signal="pressed" from="." to="." method="_OnPressed"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhayouq0djbbr"]
+[gd_scene load_steps=3 format=3 uid="uid://bhayouq0djbbr"]
 
 [ext_resource type="Theme" uid="uid://bad8rpc1fsf4q" path="res://Resources/Themes/FOLTheme.tres" id="1_72mpl"]
+[ext_resource type="PackedScene" uid="uid://df2ovsug76nep" path="res://Scenes/Menu/OptionsControlsInput.tscn" id="2_jposa"]
 
 [node name="OptionsMenu" type="Control"]
 texture_filter = 1
@@ -12,162 +13,187 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_72mpl")
 
-[node name="TabContainer" type="TabContainer" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
-offset_right = 960.0
-offset_bottom = 512.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.447059)
 
-[node name="General" type="TabBar" parent="TabContainer"]
+[node name="Options" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -724.0
+offset_top = -444.0
+offset_right = 724.0
+offset_bottom = 444.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="Options"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="General" type="TabBar" parent="Options/TabContainer"]
 layout_mode = 2
 
-[node name="Controls" type="TabBar" parent="TabContainer"]
+[node name="Controls" type="TabBar" parent="Options/TabContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls"]
-layout_mode = 2
-offset_left = 10.0
-offset_top = 130.0
-offset_right = 276.0
-offset_bottom = 256.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Options/TabContainer/Controls"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -162.0
+offset_right = 206.0
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="MovementInputs" type="Label" parent="TabContainer/Controls/VBoxContainer"]
+[node name="MovementInputs" type="Label" parent="Options/TabContainer/Controls/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.992157, 0.431373, 0.431373, 1)
 text = "- Movement inputs -"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_right = 30
 
-[node name="Labels" type="VBoxContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer"]
+[node name="Labels" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="MoveUp" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+[node name="MoveUp" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
 layout_mode = 2
 text = "Move up"
 
-[node name="MoveDown" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+[node name="MoveDown" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
 layout_mode = 2
 text = "Move down"
 
-[node name="MoveLeft" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+[node name="MoveLeft" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
 layout_mode = 2
 text = "Move left"
 
-[node name="MoveRight" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+[node name="MoveRight" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
 layout_mode = 2
 text = "Move right"
 
-[node name="Dash" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+[node name="Dash" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
 layout_mode = 2
 text = "Dash"
 
-[node name="LineEdits" type="VBoxContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer"]
+[node name="LineEdits" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="MoveUp" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+[node name="MoveUp" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
-theme_override_constants/minimum_character_width = 6
-placeholder_text = "Z"
-alignment = 1
+text_overrun_behavior = 0
+action = "move_up"
 
-[node name="MoveDown" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+[node name="MoveDown" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
-placeholder_text = "S"
-alignment = 1
+action = "move_down"
 
-[node name="MoveLeft" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+[node name="MoveLeft" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
-placeholder_text = "Q"
-alignment = 1
+action = "move_left"
 
-[node name="MoveRight" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
+[node name="MoveRight" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
-placeholder_text = "D"
-alignment = 1
+action = "move_right"
 
-[node name="Dash" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits"]
-layout_mode = 2
-placeholder_text = "Space"
-alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/VBoxContainer"]
+[node name="Dash" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
 
-[node name="GlyphInputs" type="Label" parent="TabContainer/Controls/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Options/TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+
+[node name="GlyphInputs" type="Label" parent="Options/TabContainer/Controls/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.992157, 0.431373, 0.431373, 1)
 text = "- Glyph inputs -"
 horizontal_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_right = 30
 
-[node name="Labels" type="VBoxContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer"]
+[node name="Labels" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Previous" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+[node name="Previous" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
 layout_mode = 2
 text = "Select previous glyph"
 
-[node name="Next" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+[node name="Next" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
 layout_mode = 2
 text = "Select next glyph"
 
-[node name="LightGlyph" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+[node name="LightGlyph" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
 layout_mode = 2
 text = "Select Light glyph"
 
-[node name="MovementGlyph" type="Label" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+[node name="MovementGlyph" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
 layout_mode = 2
 text = "Select Movement glyph"
 
-[node name="LineEdits" type="VBoxContainer" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2"]
+[node name="LineEdits" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 
-[node name="Previous" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+[node name="Previous" type="LineEdit" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
 layout_mode = 2
 theme_override_constants/minimum_character_width = 6
 placeholder_text = "Mousewheeldown"
 alignment = 1
 
-[node name="Next" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+[node name="Next" type="LineEdit" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
 layout_mode = 2
 placeholder_text = "Mousewheelup"
 alignment = 1
 
-[node name="LightGlyph" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+[node name="LightGlyph" type="LineEdit" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
 layout_mode = 2
 placeholder_text = "1"
 alignment = 1
 
-[node name="MovementGlyph" type="LineEdit" parent="TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+[node name="MovementGlyph" type="LineEdit" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
 layout_mode = 2
 placeholder_text = "2"
 alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 4.0
-
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_top = 512.0
+[node name="Button" type="Button" parent="Options"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
 offset_right = 148.0
-offset_bottom = 552.0
+grow_vertical = 0
 text = "< Back"

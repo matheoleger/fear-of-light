@@ -56,12 +56,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -213.0
-offset_top = 50.0
-offset_right = -71.0
-offset_bottom = 90.0
+offset_left = -212.0
+offset_top = 100.0
+offset_right = 0.000183105
+offset_bottom = 132.0
 grow_horizontal = 2
-scale = Vector2(3, 3)
+scale = Vector2(2, 2)
 
 [node name="TextureRect" type="TextureRect" parent="PauseTitle"]
 layout_mode = 2

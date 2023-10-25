@@ -1682,7 +1682,7 @@ grow_vertical = 2
 
 [node name="AnimatedBackground" type="AnimatedSprite2D" parent="AnimationBackgroundControl"]
 texture_filter = 1
-position = Vector2(1400, 544)
+position = Vector2(1300, 544)
 scale = Vector2(4.82, 4.82)
 sprite_frames = SubResource("SpriteFrames_gjv7e")
 autoplay = "default"
