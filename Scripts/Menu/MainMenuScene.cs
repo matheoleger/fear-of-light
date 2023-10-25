@@ -5,9 +5,7 @@ public partial class MainMenuScene : Control
 {
 
 	private AnimationPlayer _animationPlayer;
-
 	private SceneTransitionManager _sceneTransitionManager;
-
 	private PackedScene _splashScreenMenuScene;
 
 	// Called when the node enters the scene tree for the first time.
@@ -22,12 +20,6 @@ public partial class MainMenuScene : Control
 
 		if(!GameManager.instance.isGameLoaded)
 			InstantiateSplashScreen();
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		
 	}
 
 	private void InstantiateSplashScreen()

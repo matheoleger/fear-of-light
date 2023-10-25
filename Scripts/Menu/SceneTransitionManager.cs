@@ -18,11 +18,6 @@ public partial class SceneTransitionManager : CanvasLayer
 		_animationPlayer.Play("fade_out");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	public void ChangeScene(string target)
 	{
 		_animationPlayer.Play("fade_in");

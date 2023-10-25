@@ -10,21 +10,12 @@ public partial class OptionsMenu : Control
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-
 	public void ChangeVisibility(bool visible)
 	{
 		if(visible)
-		{
 			_animationPlayer.Play("fade_in");
-		} else
-		{
+		else
 			_animationPlayer.Play("fade_out");
-		}
 	}
 
 	public void _OnBackButtonPressed()

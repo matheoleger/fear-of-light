@@ -20,8 +20,6 @@ public partial class OptionsControlsInput : Button
 	{
 		if(@event is InputEventKey keyEvent && keyEvent.Pressed && canChangeKey)
 		{
-			GD.Print(@event.AsText());
-
 			InputMap.ActionEraseEvents(action);
 			InputMap.ActionAddEvent(action, keyEvent);
 
@@ -32,8 +30,6 @@ public partial class OptionsControlsInput : Button
 
 		if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && canChangeKey)
 		{
-			GD.Print(@event.AsText());
-
 			InputMap.ActionEraseEvents(action);
 			InputMap.ActionAddEvent(action, mouseEvent);
 

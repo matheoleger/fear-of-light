@@ -5,7 +5,6 @@ public partial class MainMenuUI : Control
 {
 
 	private SceneTransitionManager _sceneTransitionManager;
-
 	private OptionsMenu _optionsMenu;
 
 	// Called when the node enters the scene tree for the first time.
