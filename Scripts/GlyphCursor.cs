@@ -53,6 +53,8 @@ public partial class GlyphCursor : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
+		if(!GameManager.instance.isGameLoaded) return;
+		
 		HandleAim();
 
 		if(isCursorEnabled)

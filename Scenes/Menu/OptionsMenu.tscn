@@ -1,0 +1,294 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhayouq0djbbr"]
+
+[ext_resource type="Theme" uid="uid://bad8rpc1fsf4q" path="res://Resources/Themes/FOLTheme.tres" id="1_72mpl"]
+[ext_resource type="PackedScene" uid="uid://df2ovsug76nep" path="res://Scenes/Menu/OptionsControlsInput.tscn" id="2_jposa"]
+[ext_resource type="Script" path="res://Scripts/Menu/OptionsMenu.cs" id="2_o23f6"]
+
+[sub_resource type="Animation" id="Animation_f6eqg"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_khgpp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_8b5dm"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g2a5h"]
+_data = {
+"RESET": SubResource("Animation_khgpp"),
+"fade_in": SubResource("Animation_f6eqg"),
+"fade_out": SubResource("Animation_8b5dm")
+}
+
+[node name="OptionsMenu" type="Control"]
+visible = false
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_72mpl")
+script = ExtResource("2_o23f6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.384314)
+
+[node name="Options" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -724.0
+offset_top = -444.0
+offset_right = 724.0
+offset_bottom = 444.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="Options"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="General" type="TabBar" parent="Options/TabContainer"]
+layout_mode = 2
+
+[node name="Controls" type="TabBar" parent="Options/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Options/TabContainer/Controls"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -162.0
+offset_right = 206.0
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="MovementInputs" type="Label" parent="Options/TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.992157, 0.431373, 0.431373, 1)
+text = "- Movement inputs -"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 140
+
+[node name="Labels" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MoveUp" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Move up"
+
+[node name="MoveDown" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Move down"
+
+[node name="MoveLeft" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Move left"
+
+[node name="MoveRight" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Move right"
+
+[node name="Dash" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer/Labels"]
+layout_mode = 2
+text = "Dash"
+
+[node name="Inputs" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MoveUp" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
+layout_mode = 2
+action = "move_up"
+
+[node name="MoveDown" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
+layout_mode = 2
+action = "move_down"
+
+[node name="MoveLeft" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
+layout_mode = 2
+action = "move_left"
+
+[node name="MoveRight" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
+layout_mode = 2
+action = "move_right"
+
+[node name="Dash" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Options/TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+
+[node name="GlyphInputs" type="Label" parent="Options/TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.992157, 0.431373, 0.431373, 1)
+text = "- Glyph inputs -"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 140
+
+[node name="Labels" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Previous" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+layout_mode = 2
+text = "Select previous glyph"
+
+[node name="Next" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+layout_mode = 2
+text = "Select next glyph"
+
+[node name="LightGlyph" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+layout_mode = 2
+text = "Select Light glyph"
+
+[node name="MovementGlyph" type="Label" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer/Labels"]
+layout_mode = 2
+text = "Select Movement glyph"
+
+[node name="LineEdits" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="PreviousGlyph" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits" instance=ExtResource("2_jposa")]
+layout_mode = 2
+action = "select_previous_glyph"
+
+[node name="NextGlyph" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits" instance=ExtResource("2_jposa")]
+layout_mode = 2
+action = "select_next_glyph"
+
+[node name="LightGlyphInput" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits" instance=ExtResource("2_jposa")]
+layout_mode = 2
+action = "light_glyph_shortcut"
+
+[node name="MovementGlyphInput" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits" instance=ExtResource("2_jposa")]
+layout_mode = 2
+action = "movement_glyph_shortcut"
+
+[node name="BackButton" type="Button" parent="Options"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -64.0
+offset_right = 168.0
+offset_bottom = -24.0
+grow_vertical = 0
+text = "< Back"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_g2a5h")
+}
+
+[connection signal="pressed" from="Options/BackButton" to="." method="_OnBackButtonPressed"]

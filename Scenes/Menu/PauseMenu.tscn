@@ -1,0 +1,166 @@
+[gd_scene load_steps=9 format=3 uid="uid://cakag4b77owda"]
+
+[ext_resource type="Theme" uid="uid://bad8rpc1fsf4q" path="res://Resources/Themes/FOLTheme.tres" id="1_rboxo"]
+[ext_resource type="Script" path="res://Scripts/Menu/PauseMenu.cs" id="2_kt1vl"]
+[ext_resource type="Texture2D" uid="uid://med4j526j77k" path="res://Resources/Images/Logo/demi-cercle-little.png" id="2_qwfl1"]
+[ext_resource type="PackedScene" uid="uid://bhayouq0djbbr" path="res://Scenes/Menu/OptionsMenu.tscn" id="4_svu67"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jcc0x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lb5p4"]
+bg_color = Color(0.0352941, 0.0352941, 0.0352941, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jnkib"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mt1rr"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rboxo")
+script = ExtResource("2_kt1vl")
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0352941, 0.0352941, 0.0352941, 0.454902)
+
+[node name="PauseTitle" type="HBoxContainer" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -212.0
+offset_top = 100.0
+offset_right = 0.000183105
+offset_bottom = 132.0
+grow_horizontal = 2
+scale = Vector2(2, 2)
+
+[node name="TextureRect" type="TextureRect" parent="PauseTitle"]
+layout_mode = 2
+texture = ExtResource("2_qwfl1")
+
+[node name="Label" type="Label" parent="PauseTitle"]
+layout_mode = 2
+text = "Pause"
+
+[node name="TextureRect2" type="TextureRect" parent="PauseTitle"]
+layout_mode = 2
+texture = ExtResource("2_qwfl1")
+flip_h = true
+
+[node name="MenuButtons" type="PanelContainer" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = -109.0
+offset_right = 129.0
+offset_bottom = 109.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jcc0x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuButtons"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="MenuButtons/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="OptionsButton" type="Button" parent="MenuButtons/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="MenuButtons/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="QuitSubMenu" type="PanelContainer" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = -109.0
+offset_right = 285.0
+offset_bottom = 109.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lb5p4")
+
+[node name="VSplitContainer" type="VBoxContainer" parent="QuitSubMenu"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="CloseQuitSubMenu" type="Button" parent="QuitSubMenu/VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jnkib")
+text = "x"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuitSubMenu/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="ToMenuButton" type="Button" parent="QuitSubMenu/VSplitContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mt1rr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_mt1rr")
+text = "To menu"
+
+[node name="ToDekstopButton" type="Button" parent="QuitSubMenu/VSplitContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mt1rr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_mt1rr")
+text = "To Dekstop"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("4_svu67")]
+layout_mode = 1
+
+[connection signal="pressed" from="MenuButtons/VBoxContainer/ResumeButton" to="." method="_OnResumeButtonPressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/OptionsButton" to="." method="_OnOptionsButtonPressed"]
+[connection signal="pressed" from="MenuButtons/VBoxContainer/QuitButton" to="." method="_OnQuitButtonPressed"]
+[connection signal="pressed" from="QuitSubMenu/VSplitContainer/CloseQuitSubMenu" to="." method="_OnCloseQuitSubMenuPressed"]
+[connection signal="pressed" from="QuitSubMenu/VSplitContainer/HBoxContainer/ToMenuButton" to="." method="_OnToMenuButtonPressed"]
+[connection signal="pressed" from="QuitSubMenu/VSplitContainer/HBoxContainer/ToDekstopButton" to="." method="_OnToDesktopButtonPressed"]
