@@ -78,7 +78,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_right = 30
+theme_override_constants/margin_right = 140
 
 [node name="Labels" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
@@ -104,27 +104,26 @@ text = "Move right"
 layout_mode = 2
 text = "Dash"
 
-[node name="LineEdits" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer"]
+[node name="Inputs" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="MoveUp" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
+[node name="MoveUp" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
 layout_mode = 2
-text_overrun_behavior = 0
 action = "move_up"
 
-[node name="MoveDown" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
+[node name="MoveDown" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
 layout_mode = 2
 action = "move_down"
 
-[node name="MoveLeft" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
+[node name="MoveLeft" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
 layout_mode = 2
 action = "move_left"
 
-[node name="MoveRight" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
+[node name="MoveRight" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
 layout_mode = 2
 action = "move_right"
 
-[node name="Dash" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/LineEdits" instance=ExtResource("2_jposa")]
+[node name="Dash" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer/Inputs" instance=ExtResource("2_jposa")]
 layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="Options/TabContainer/Controls/VBoxContainer"]
@@ -142,7 +141,7 @@ layout_mode = 2
 [node name="MarginContainer" type="MarginContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_right = 30
+theme_override_constants/margin_right = 140
 
 [node name="Labels" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/MarginContainer"]
 layout_mode = 2
@@ -167,26 +166,21 @@ text = "Select Movement glyph"
 [node name="LineEdits" type="VBoxContainer" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 
-[node name="Previous" type="LineEdit" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+[node name="PreviousGlyph" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
-theme_override_constants/minimum_character_width = 6
-placeholder_text = "Mousewheeldown"
-alignment = 1
+action = "select_previous_glyph"
 
-[node name="Next" type="LineEdit" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+[node name="NextGlyph" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
-placeholder_text = "Mousewheelup"
-alignment = 1
+action = "select_next_glyph"
 
-[node name="LightGlyph" type="LineEdit" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+[node name="LightGlyphInput" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
-placeholder_text = "1"
-alignment = 1
+action = "light_glyph_shortcut"
 
-[node name="MovementGlyph" type="LineEdit" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits"]
+[node name="MovementGlyphInput" parent="Options/TabContainer/Controls/VBoxContainer/HBoxContainer2/LineEdits" instance=ExtResource("2_jposa")]
 layout_mode = 2
-placeholder_text = "2"
-alignment = 1
+action = "movement_glyph_shortcut"
 
 [node name="Button" type="Button" parent="Options"]
 layout_mode = 1

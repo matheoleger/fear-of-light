@@ -13,26 +13,7 @@ public partial class OptionsControlsInput : Button
 	{
 		if(action == null) return;
 
-		// GD.Print(InputMap.ActionGetEvents(action)[3].AsText());
-
-		// OS.GetKeycodeString(InputMap.ActionGetEvents(action)[3].keyCode);
-
-		if(InputMap.ActionGetEvents(action)[0] is InputEventKey eventKey)
-		{
-
-			// OS.GetKeycodeString(eventKey.GetKeycodeWithModifiers());
-			
-			// GD.Print();
-
-			// GD.Print("Is eventkey ", eventKey.AsTextPhysicalKeycode());
-			GD.Print("Is eventkey ", eventKey.GetPhysicalKeycodeWithModifiers());
-			Text = eventKey.AsTextPhysicalKeycode(); //Warning: All the time physical ?
-		} else
-		{
-			GD.Print("Is mouseEvent");
-			Text = InputMap.ActionGetEvents(action)[0].AsText();
-		}
-
+		Text = InputMap.ActionGetEvents(action)[0].AsText();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

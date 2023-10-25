@@ -17,9 +17,9 @@ content_margin_bottom = 5.0
 bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
 
 [node name="OptionsControlsButton" type="Button"]
-offset_right = 128.0
+custom_minimum_size = Vector2(300, 0)
+offset_right = 300.0
 offset_bottom = 33.0
-theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_1olpo")
 theme_override_styles/hover = SubResource("StyleBoxFlat_eqyin")
 text = "Press key"
