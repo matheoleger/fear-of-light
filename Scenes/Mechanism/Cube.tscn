@@ -23,7 +23,7 @@ freeze_mode = 1
 linear_damp = 10.0
 angular_damp = 10.0
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="MovementPointLight2D" type="PointLight2D" parent="."]
 enabled = false
 color = Color(0.431373, 0.992157, 0.6, 1)
 energy = 0.5
