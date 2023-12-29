@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfijoajdgl32x"]
+[gd_scene load_steps=9 format=3 uid="uid://bfijoajdgl32x"]
 
 [ext_resource type="Texture2D" uid="uid://bfkhah4axphpu" path="res://Resources/Textures/light.png" id="1_77smj"]
+[ext_resource type="Script" path="res://Scripts/Mechanism/LightPole.cs" id="1_b4s76"]
 [ext_resource type="Texture2D" uid="uid://dh8gcxdwreh87" path="res://Resources/Sprites/lightpole-v1.png" id="1_wuow6"]
 [ext_resource type="Texture2D" uid="uid://d340gch3p8jgn" path="res://Resources/Sprites/rechargeable-lightpole-v1.png" id="2_vyvej"]
 
@@ -35,6 +36,7 @@ radius = 100.0
 [node name="LightPole" type="StaticBody2D" groups=["LightSources"]]
 texture_filter = 1
 collision_layer = 2
+script = ExtResource("1_b4s76")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(1, 0.580392, 0.556863, 1)

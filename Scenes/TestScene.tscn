@@ -63,6 +63,7 @@ position = Vector2(0, 70)
 
 [node name="MovableLightPole" parent="Map" instance=ExtResource("8_1701s")]
 position = Vector2(350, 0)
+IsRechargeable = true
 
 [node name="LightSensor" parent="Map" instance=ExtResource("2_rrsei")]
 position = Vector2(-224, 96)
