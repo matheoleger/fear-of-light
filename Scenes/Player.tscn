@@ -742,5 +742,6 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerLightArea"]
 shape = SubResource("CircleShape2D_g8m0q")
+debug_color = Color(0.529412, 0.556863, 0.34902, 0.419608)
 
 [connection signal="timeout" from="DashCooldownTimer" to="." method="_OnDashCooldownTimeout"]

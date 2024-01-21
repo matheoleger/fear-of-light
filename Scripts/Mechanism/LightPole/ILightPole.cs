@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public interface IRechargeableLightPole
+public interface ILightPole
 {
 	/// <remarks>
 	///     <para>
@@ -23,13 +23,11 @@ public interface IRechargeableLightPole
 	/// </remarks>
 	abstract AnimatedSprite2D _AnimatedSprite { get; set; }
 
-	/// <remarks>
-	///     <para>
-	///         This method can be called in the <c>_Ready</c> method to define the animation (according to <c>IsRechargeable</c>)
-	///     </para>
-	///     <para>
-	///         Define the animation of the lightPole.
-	///     </para>
-	/// </remarks>
-	void ChangeAnimation();
+
+	abstract PointLight2D _PointLight2D { get; set; }
+
+	abstract Area2D _LightArea2D { get; set; }
+
+	abstract Tween RechargeableTween {get; set; }
+
 }
