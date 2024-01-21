@@ -137,6 +137,7 @@ texture = ExtResource("2_hps06")
 texture_scale = 0.5
 
 [node name="LightCrystalLightArea" type="Area2D" parent="."]
+collision_layer = 2
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LightCrystalLightArea"]

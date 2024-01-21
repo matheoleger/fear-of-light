@@ -145,6 +145,7 @@ move_down={
 2d_physics/layer_2="LightArea"
 2d_physics/layer_3="SpawnableObjects"
 2d_physics/layer_4="MovableObjects"
+2d_physics/layer_5="LightDetectionArea"
 
 [physics]
 

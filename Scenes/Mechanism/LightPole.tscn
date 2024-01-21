@@ -59,6 +59,7 @@ position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_chcub")
 
 [node name="LightArea2D" type="Area2D" parent="."]
+collision_layer = 2
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LightArea2D"]
@@ -66,6 +67,7 @@ shape = SubResource("CircleShape2D_tj4n1")
 debug_color = Color(0.494118, 0.572549, 0.301961, 0.419608)
 
 [node name="RechargeableArea2D" type="Area2D" parent="."]
+collision_layer = 16
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RechargeableArea2D"]
