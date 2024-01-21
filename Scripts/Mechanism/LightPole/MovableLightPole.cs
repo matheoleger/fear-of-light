@@ -40,39 +40,9 @@ public partial class MovableLightPole : RigidBody2D, ILightPole
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		// GD.Print(RechargeableTween.IsRunning());
-
-		// if(IsRechargeable)
-		// {
-		// 	if(RechargeableTween != null)
-		// 		RechargeableLightPoleHelper.FadeOutLight(this);
-
-		// }
-
-		// if(IsRechargeable && !isFadingOut)
-		// 	FadeOutLight();
-		
-		// RechargeableTween ??= CreateTween();
-
-		// if(!RechargeableTween.IsRunning()) 
-		// {
-		// 	// RechargeableTween = CreateTween();
-		// 	RechargeableLightPoleHelper.FadeOutLight(this);
-		// }
-
-		// if(RechargeableTween != null)
-		// {
-		// 	GD.Print("FIRST", RechargeableTween.IsRunning());
-		// 	RechargeableTween.Parallel().TweenProperty(_PointLight2D, "energy", 0.0f, 15.0f);
-		// 	GD.Print("SECOND", RechargeableTween.IsRunning());
-		// }
-
-		// RechargeableTween.Parallel().TweenProperty(_PointLight2D, "energy", 0.0f, 15.0f);
-
+		if(!IsRechargeable) return;
 
 		DetectAndTrackLightSources();
-
-		// GD.Print(detectedLightSources.Count);
 
 		if(detectedLightSources.Count >= 1)
 			FadeInLight();
@@ -125,8 +95,6 @@ public partial class MovableLightPole : RigidBody2D, ILightPole
 			
 			bool isColliderALightSource = collider is Node2D nodeCollider && nodeCollider.IsInGroup("LightSources");
 
-			GD.Print("isColliderALightSource", isColliderALightSource);
-
 			if(_RayCast2D.IsColliding() && isColliderALightSource)
 			{
 				if(!detectedLightSources.Contains(areaToVerified))
@@ -149,13 +117,6 @@ public partial class MovableLightPole : RigidBody2D, ILightPole
 		if(!areasCurrentlyInArea2D.Contains(area) && area.GetParent() != this)
 			areasCurrentlyInArea2D.Add(area);
 
-		GD.Print(areasCurrentlyInArea2D.Count);
-		
-		// GD.Print("areaCurrently", areasCurrentlyInArea2D.Count);
-		// GD.Print("detectedLightSource", detectedLightSources.Count);
-		
-		// if(detectedLightSources.Count >= 1)
-		// 	FadeInLight();
 	}
 
 	public void _OnRechargeableArea2dAreaExited(Area2D area)
@@ -168,8 +129,5 @@ public partial class MovableLightPole : RigidBody2D, ILightPole
 
 		if(detectedLightSources.Contains(area))
 			detectedLightSources.Remove(area);	
-
-		// if(detectedLightSources.Count <= 0)
-		// 	FadeOutLight();
 	}
 }

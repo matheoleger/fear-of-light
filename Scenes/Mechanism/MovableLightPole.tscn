@@ -97,7 +97,7 @@ shape = SubResource("RectangleShape2D_08qfr")
 debug_color = Color(0.741176, 0.317647, 0.85098, 0.419608)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-collision_mask = 7
+collision_mask = 15
 
 [connection signal="area_entered" from="RechargeableArea2D" to="." method="_OnRechargeableArea2dAreaEntered"]
 [connection signal="area_exited" from="RechargeableArea2D" to="." method="_OnRechargeableArea2dAreaExited"]
