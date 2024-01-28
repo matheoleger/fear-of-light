@@ -21,14 +21,14 @@ public partial class GlyphCursor : Node2D
 		MovementGlyph
 	}
 
-	private Glyph selectedCursorGlyph = Glyph.MovementGlyph;
-
 	public Glyph SelectedCursorGlyph {
-		get { return selectedCursorGlyph; }
-		set { selectedCursorGlyph = value; }
+		get;
+		set;
 	}
 
 	private const float maxDistance = 130f;
+
+	private LightCrystal currentLightCrystal;
 
 	private RigidBody2D selectedMovableObject;
 	private RigidBody2D detectedMovableObject;
@@ -63,7 +63,7 @@ public partial class GlyphCursor : Node2D
 
 	public void ChangeCursorTexture()
 	{
-		switch(selectedCursorGlyph){
+		switch(SelectedCursorGlyph){
 			case Glyph.LightGlyph:
 				_sprite2D.Texture = lightGlyphCursor;
 				_pointLight.Color = new Color("ff4e4f");
@@ -91,7 +91,7 @@ public partial class GlyphCursor : Node2D
 
 			Position = GameManager.instance.player.Position; // Reinitialize position to exit from the Area of movableObject.
 
-			if(selectedCursorGlyph == Glyph.MovementGlyph)
+			if(SelectedCursorGlyph == Glyph.MovementGlyph)
 				ReinitializedMovementGlyphProperties();
 		}
 	}
@@ -147,10 +147,10 @@ public partial class GlyphCursor : Node2D
 		bool isAiming = Input.IsActionPressed("aim_with_glyph");
 		if(!isAiming) return;
 
-		if(selectedCursorGlyph == Glyph.LightGlyph)
+		if(SelectedCursorGlyph == Glyph.LightGlyph)
 		{
 			HandleLightGlyph();
-		} else if(selectedCursorGlyph == Glyph.MovementGlyph)
+		} else if(SelectedCursorGlyph == Glyph.MovementGlyph)
 		{
 			HandleMovementGlyph();
 		}
@@ -162,15 +162,13 @@ public partial class GlyphCursor : Node2D
 
 		if(!isPlacing) return;
 
-		Node previousLightCrystal = GetTree().CurrentScene.GetNodeOrNull("LightCrystal");
 		LightCrystal lightCrystalInstance = lightCrystalScene.Instantiate<LightCrystal>();
-	
 		lightCrystalInstance.Position = Position;
 
-		if(previousLightCrystal != null)
-			GetTree().CurrentScene.RemoveChild(previousLightCrystal);
+		currentLightCrystal?.DestroySelf(); //Destroy the currentLightCrystal before add new lightCrystal
 
 		GetTree().CurrentScene.AddChild(lightCrystalInstance);
+		currentLightCrystal = lightCrystalInstance;
 
 		isCursorEnabled = false;
 		_cooldownTimer.Start();
@@ -222,7 +220,7 @@ public partial class GlyphCursor : Node2D
 
 	public void _OnArea2dBodyEntered(Node2D body)
 	{
-		if(isMovingObject || selectedCursorGlyph != Glyph.MovementGlyph) return;
+		if(isMovingObject || SelectedCursorGlyph != Glyph.MovementGlyph) return;
 
 		if(body.IsInGroup("MovableObjects") && body is RigidBody2D rigidBody)
 			detectedMovableObject = rigidBody;
