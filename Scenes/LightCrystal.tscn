@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/LightCrystal.cs" id="1_peynb"]
 [ext_resource type="Texture2D" uid="uid://4a4bsdq32j72" path="res://Resources/Animations/light-crystal/light-crystal-apparition.png" id="2_8twsy"]
 [ext_resource type="Texture2D" uid="uid://bfkhah4axphpu" path="res://Resources/Textures/light.png" id="2_hps06"]
-[ext_resource type="Texture2D" uid="uid://tfec0ea1q264" path="res://Resources/Animations/light-crystal/light-crystal-disparition.png" id="4_jg0n3"]
+[ext_resource type="Texture2D" uid="uid://tfec0ea1q264" path="res://Resources/Animations/light-crystal/light-crystal-disappearance.png" id="4_jg0n3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_udvre"]
 atlas = ExtResource("2_8twsy")
