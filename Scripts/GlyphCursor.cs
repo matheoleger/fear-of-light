@@ -202,13 +202,16 @@ public partial class GlyphCursor : Node2D
 
 	private void ChangeMovableObjectOutline(bool isSelected)
 	{
-		if(selectedMovableObject.GetNode<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
+		if(selectedMovableObject.GetNodeOrNull<Sprite2D>("Sprite2D") is Sprite2D movableObjectSprite)
 			movableObjectSprite.Material.Set("shader_parameter/line_thickness", isSelected ? 1 : 0);
+
+		if(selectedMovableObject.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D") is AnimatedSprite2D movableObjectAnimatedSprite)
+			movableObjectAnimatedSprite.Material.Set("shader_parameter/line_thickness", isSelected ? 1 : 0);
 	}
 
 	private void ChangeMovableObjectPointLight(bool isMoving)
 	{
-		if(selectedMovableObject.GetNode<PointLight2D>("PointLight2D") is PointLight2D movableObjectPointLight)
+		if(selectedMovableObject.GetNode<PointLight2D>("MovementPointLight2D") is PointLight2D movableObjectPointLight)
 			movableObjectPointLight.Enabled = isMoving;
 	}
 

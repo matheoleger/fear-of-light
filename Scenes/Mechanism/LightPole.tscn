@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://bfijoajdgl32x"]
+
+[ext_resource type="Texture2D" uid="uid://bfkhah4axphpu" path="res://Resources/Textures/light.png" id="1_77smj"]
+[ext_resource type="Script" path="res://Scripts/Mechanism/LightPole/LightPole.cs" id="1_b4s76"]
+[ext_resource type="Texture2D" uid="uid://dh8gcxdwreh87" path="res://Resources/Sprites/lightpole-v1.png" id="1_wuow6"]
+[ext_resource type="Texture2D" uid="uid://d340gch3p8jgn" path="res://Resources/Sprites/rechargeable-lightpole-v1.png" id="2_vyvej"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kfkt0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wuow6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vyvej")
+}],
+"loop": true,
+"name": &"rechargeable",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bjmh4"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chcub"]
+size = Vector2(10, 56)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tj4n1"]
+radius = 100.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0pcgh"]
+size = Vector2(50, 97)
+
+[node name="LightPole" type="StaticBody2D" groups=["LightSources"]]
+texture_filter = 1
+collision_layer = 10
+collision_mask = 9
+script = ExtResource("1_b4s76")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.580392, 0.556863, 1)
+energy = 0.6
+texture = ExtResource("1_77smj")
+texture_scale = 0.7
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kfkt0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_bjmh4")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_chcub")
+
+[node name="LightArea2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightArea2D"]
+shape = SubResource("CircleShape2D_tj4n1")
+debug_color = Color(0.494118, 0.572549, 0.301961, 0.419608)
+
+[node name="RechargeableArea2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RechargeableArea2D"]
+shape = SubResource("RectangleShape2D_0pcgh")
+debug_color = Color(0.741176, 0.317647, 0.85098, 0.419608)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 15
+
+[connection signal="area_entered" from="RechargeableArea2D" to="." method="_OnRechargeableArea2dAreaEntered"]
+[connection signal="area_exited" from="RechargeableArea2D" to="." method="_OnRechargeableArea2dAreaExited"]
