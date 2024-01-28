@@ -165,7 +165,7 @@ public partial class GlyphCursor : Node2D
 		LightCrystal lightCrystalInstance = lightCrystalScene.Instantiate<LightCrystal>();
 		lightCrystalInstance.Position = Position;
 
-		currentLightCrystal?.DestroySelf(); //Destroy the currentLightCrystal before add new lightCrystal
+		currentLightCrystal?.Destroy(); //Destroy the currentLightCrystal before add new lightCrystal
 
 		GetTree().CurrentScene.AddChild(lightCrystalInstance);
 		currentLightCrystal = lightCrystalInstance;

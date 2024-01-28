@@ -5,33 +5,45 @@ public partial class LightCrystal : Node2D
 {
 
 	private AnimatedSprite2D _animatedSprite;
-	
+
+	private bool isDestroying = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-        _animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_animatedSprite.Play("apparition");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		HandleDestroying();
 	}
 
-	public void DestroySelf()
+	public void Destroy()
 	{
-		_animatedSprite.Play("disparition");
+		isDestroying = true;
+	}
+
+	private void HandleDestroying()
+	{
+		if (!isDestroying) return;
+
+		bool isRightFrame = _animatedSprite.Frame == 13 
+		|| _animatedSprite.Frame == 12 
+		|| _animatedSprite.Frame == 0 
+		|| _animatedSprite.Frame == 1;
+
+		if (isRightFrame)
+			_animatedSprite.Play("disparition");
 	}
 
 	public void _OnAnimatedSprite2dAnimationFinished()
 	{
-		GD.Print(_animatedSprite.Animation);
-
-		if(_animatedSprite.Animation == "apparition")
+		if (_animatedSprite.Animation == "apparition")
 			_animatedSprite.Play("default");
 
-		if(_animatedSprite.Animation == "disparition")
+		if (_animatedSprite.Animation == "disparition")
 			GetTree().CurrentScene.RemoveChild(this);
 	}
 
