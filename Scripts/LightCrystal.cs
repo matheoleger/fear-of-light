@@ -35,7 +35,7 @@ public partial class LightCrystal : Node2D
 		|| _animatedSprite.Frame == 1;
 
 		if (isRightFrame)
-			_animatedSprite.Play("disparition");
+			_animatedSprite.Play("disappearance");
 	}
 
 	public void _OnAnimatedSprite2dAnimationFinished()
@@ -43,7 +43,7 @@ public partial class LightCrystal : Node2D
 		if (_animatedSprite.Animation == "apparition")
 			_animatedSprite.Play("default");
 
-		if (_animatedSprite.Animation == "disparition")
+		if (_animatedSprite.Animation == "disappearance")
 			GetTree().CurrentScene.RemoveChild(this);
 	}
 
