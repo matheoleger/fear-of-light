@@ -15,7 +15,7 @@ run/main_scene="res://Scenes/Menu/MainMenuScene.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 boot_splash/bg_color=Color(0.0352941, 0.0352941, 0.0352941, 1)
 boot_splash/show_image=false
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
