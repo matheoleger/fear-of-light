@@ -3,14 +3,13 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	private PackedScene _dashGhostScene;
+	
 	private AnimatedSprite2D _animatedSprite;
 	private Timer _dashCooldownTimer;
 	private Timer _dashGhostTimer;
-
 	private PointLight2D _pointLight;
 	private AudioStreamPlayer2D _audioStreamPlayer;
-
-	private PackedScene _dashGhostScene;
 
 	private const float MaxSpeed = 200.0f;
 	private const float DashSpeed = 700.0f; 
@@ -131,16 +130,6 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
-	public void _OnDashCooldownTimeout()
-	{
-		isDashing = false;
-	}
-
-	public void _OnDashGhostTimerTimeout()
-	{
-		InstanceDashGhost();
-	}
-
 	private void HandleAnimation(Vector2 currentDirection) 
 	{
 		if(currentDirection == Vector2.Down)
@@ -173,5 +162,15 @@ public partial class Player : CharacterBody2D
 		{
 			_animatedSprite.Play("idle-right");
 		}
+	}
+
+	public void _OnDashCooldownTimeout()
+	{
+		isDashing = false;
+	}
+
+	public void _OnDashGhostTimerTimeout()
+	{
+		InstanceDashGhost();
 	}
 }

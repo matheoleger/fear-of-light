@@ -9,10 +9,10 @@ public partial class DashGhost : Sprite2D
 	{
 		tween = CreateTween();
 		tween.TweenProperty(this, "modulate:a", 0.0, 0.3);
-		tween.TweenCallback(Callable.From(EndDashGhostCallback));
+		tween.TweenCallback(Callable.From(RemoveThisInstance));
 	}
 
-	private void EndDashGhostCallback()
+	private void RemoveThisInstance()
 	{
 		GetParent().RemoveChild(this);
 	}
