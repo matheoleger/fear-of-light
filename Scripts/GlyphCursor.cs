@@ -67,6 +67,7 @@ public partial class GlyphCursor : Node2D
 			case Glyph.LightGlyph:
 				_sprite2D.Texture = lightGlyphCursor;
 				_pointLight.Color = new Color("ff4e4f");
+				ReinitializedMovementGlyphProperties();
 				break;
 			case Glyph.MovementGlyph:
 				_sprite2D.Texture = movementGlyphCursor;
@@ -136,6 +137,7 @@ public partial class GlyphCursor : Node2D
 		if(selectedMovableObject != null)
 		{
 			ChangeMovableObjectOutline(false);
+			ChangeMovableObjectPointLight(false);
 			selectedMovableObject = null;
 		}
 
@@ -176,7 +178,7 @@ public partial class GlyphCursor : Node2D
 
 	private void HandleMovementGlyph()
 	{
-		if(detectedMovableObject == null) return;
+		if(detectedMovableObject == null && selectedMovableObject == null) return;
 
 		selectedMovableObject ??= detectedMovableObject;
 
@@ -187,6 +189,9 @@ public partial class GlyphCursor : Node2D
 		{
 			isMovingObject = !isMovingObject;
 			ChangeMovableObjectPointLight(isMovingObject);
+
+			if(!isMovingObject)
+				ReinitializedMovementGlyphProperties();
 		}
 
 		if(isMovingObject)
@@ -220,17 +225,16 @@ public partial class GlyphCursor : Node2D
 
 	public void _OnArea2dBodyEntered(Node2D body)
 	{
-		if(isMovingObject || SelectedCursorGlyph != Glyph.MovementGlyph) return;
-
 		if(body.IsInGroup("MovableObjects") && body is RigidBody2D rigidBody)
 			detectedMovableObject = rigidBody;
 	}
 
 	public void _OnArea2dBodyExited(Node2D body)
 	{
-		if(isMovingObject || body != detectedMovableObject) return;
-
-		ReinitializedMovementGlyphProperties();
+		if(body != detectedMovableObject) return;
 		detectedMovableObject = null;
+
+		if(isMovingObject) return;
+		ReinitializedMovementGlyphProperties();
 	}
 }
