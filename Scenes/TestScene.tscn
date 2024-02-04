@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cg2xa2cogs6mw" path="res://Scenes/TestMap.tscn" id="1_4mi7b"]
 [ext_resource type="PackedScene" uid="uid://bx1xv2rr2tcqk" path="res://Scenes/GlyphCursor.tscn" id="1_i2k7s"]
 [ext_resource type="Texture2D" uid="uid://umcwyp3j64oq" path="res://Resources/Images/background-v1-layer-0.png" id="1_xm7q1"]
-[ext_resource type="PackedScene" uid="uid://b7hi1ryxf8yfb" path="res://Scenes/Player.tscn" id="2_c7gyd"]
+[ext_resource type="PackedScene" uid="uid://b7hi1ryxf8yfb" path="res://Scenes/Player/Player.tscn" id="2_c7gyd"]
 [ext_resource type="PackedScene" uid="uid://c7iic8cwgvn8r" path="res://Scenes/Mechanism/LightSensor.tscn" id="2_rrsei"]
 [ext_resource type="Texture2D" uid="uid://dkyuo4j41bic8" path="res://Resources/Images/background-v1-layer-2.png" id="3_o4y85"]
 [ext_resource type="PackedScene" uid="uid://w5hxk6pckerq" path="res://Scenes/Mechanism/Door.tscn" id="4_muyt6"]

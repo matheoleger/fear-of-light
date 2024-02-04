@@ -3,9 +3,11 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	private PackedScene _dashGhostScene;
+	
 	private AnimatedSprite2D _animatedSprite;
 	private Timer _dashCooldownTimer;
-
+	private Timer _dashGhostTimer;
 	private PointLight2D _pointLight;
 	private AudioStreamPlayer2D _audioStreamPlayer;
 
@@ -16,7 +18,6 @@ public partial class Player : CharacterBody2D
 	private const float Friction = 1200.0f;
 	private const float Acceleration = 1500.0f;
 
-	private bool canDash = true;
 	private bool isDashing = false;
 
 	private bool isAwake = false;
@@ -29,8 +30,11 @@ public partial class Player : CharacterBody2D
 		// Define nodes
         _animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dashCooldownTimer = GetNode<Timer>("DashCooldownTimer");
+		_dashGhostTimer = GetNode<Timer>("DashGhostTimer");
 		_pointLight = GetNode<PointLight2D>("PointLight2D");
 		_audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+
+		_dashGhostScene = GD.Load<PackedScene>("res://Scenes/Player/DashGhost.tscn");
 
 		// Define default states
 		_pointLight.Energy = 0;
@@ -69,12 +73,26 @@ public partial class Player : CharacterBody2D
 
 	private void HandleDash()
 	{
-		if(Input.IsActionPressed("dash") && canDash)
+		if(Input.IsActionJustPressed("dash"))
     	{
-			canDash = false;
 			isDashing = true;
+
 			_dashCooldownTimer.Start();
+			_dashGhostTimer.Start();
 		}
+
+		if(!isDashing)
+			_dashGhostTimer.Stop();
+
+	}
+
+	private void InstanceDashGhost()
+	{
+			DashGhost dashGhostInstance = _dashGhostScene.Instantiate<DashGhost>();
+			dashGhostInstance.Texture = _animatedSprite.SpriteFrames.GetFrameTexture(_animatedSprite.Animation, _animatedSprite.Frame);
+			dashGhostInstance.GlobalPosition = GlobalPosition;
+			
+			GetParent().AddChild(dashGhostInstance);
 	}
 
 	//TODO: Show if there is a better solution ?
@@ -112,12 +130,6 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
-	public void _OnDashCooldownTimeout()
-	{
-		canDash = true;
-		isDashing = false;
-	}
-
 	private void HandleAnimation(Vector2 currentDirection) 
 	{
 		if(currentDirection == Vector2.Down)
@@ -150,5 +162,15 @@ public partial class Player : CharacterBody2D
 		{
 			_animatedSprite.Play("idle-right");
 		}
+	}
+
+	public void _OnDashCooldownTimeout()
+	{
+		isDashing = false;
+	}
+
+	public void _OnDashGhostTimerTimeout()
+	{
+		InstanceDashGhost();
 	}
 }

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1ewdrfxe0ep4"]
+
+[ext_resource type="Script" path="res://Scripts/Player/DashGhost.cs" id="2_gq3gj"]
+
+[node name="DashGhost" type="Sprite2D"]
+script = ExtResource("2_gq3gj")
