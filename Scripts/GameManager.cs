@@ -16,7 +16,8 @@ public partial class GameManager : Node
 	public GlyphCursor glyphCursor;
 
 	private string[] gameScenes = {
-		"TestScene"
+		"TestScene",
+		"ChapterOne"
 	};
 
 	public bool isGameLoaded = false;
