@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://odw1hntf7jbl"]
+[gd_scene load_steps=16 format=3 uid="uid://odw1hntf7jbl"]
 
 [ext_resource type="PackedScene" uid="uid://dl8ogniavna3p" path="res://Scenes/GUI/GlyphsGUI.tscn" id="1_4k4ob"]
 [ext_resource type="Texture2D" uid="uid://umcwyp3j64oq" path="res://Resources/Images/background-v1-layer-0.png" id="1_i5anp"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cw6tlufjyb3jw" path="res://Resources/Palettes/ground-palette.png" id="6_vcm1k"]
 [ext_resource type="Texture2D" uid="uid://dv4jc76m0u2je" path="res://Resources/Palettes/wall-palette-1.png" id="7_dq20d"]
 [ext_resource type="PackedScene" uid="uid://bfijoajdgl32x" path="res://Scenes/Mechanism/LightPole.tscn" id="9_ac4eb"]
+[ext_resource type="Material" uid="uid://7aawfom7osge" path="res://Resources/Particles/FloatingParticles.tres" id="10_8uswb"]
+[ext_resource type="PackedScene" uid="uid://cgh4himrrjine" path="res://Scenes/Environments/FloatingParticlesParallax.tscn" id="10_cbjrp"]
 
 [sub_resource type="Environment" id="Environment_besx1"]
 glow_enabled = true
@@ -61,30 +63,6 @@ occlusion_layer_0/light_mask = 1
 sources/0 = SubResource("TileSetAtlasSource_pohl7")
 sources/1 = SubResource("TileSetAtlasSource_ub2fp")
 
-[sub_resource type="Curve" id="Curve_7vivj"]
-_data = [Vector2(0.00666666, 0), 0.0, 0.0, 0, 0, Vector2(0.306667, 1), 0.0, 0.0, 0, 0, Vector2(0.846667, 1), 0.0, 0.0, 0, 0, Vector2(0.993333, 0), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_u7k0f"]
-curve = SubResource("Curve_7vivj")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vv0sl"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(960, 540, 0)
-emission_shape = 3
-emission_box_extents = Vector3(920, 500, 10)
-angle_max = 720.0
-spread = 180.0
-gravity = Vector3(0, 6, 0)
-scale_min = 2.0
-scale_max = 2.8
-color = Color(1, 0.580392, 0.556863, 1)
-alpha_curve = SubResource("CurveTexture_u7k0f")
-turbulence_enabled = true
-turbulence_noise_strength = 5.63
-turbulence_noise_scale = 6.817
-turbulence_noise_speed_random = 2.35
-
 [node name="ChapterOne" type="Node2D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -132,22 +110,8 @@ position = Vector2(416, -144)
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.0912933, 0.0912933, 0.121094, 1)
 
-[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
-layer = 1
-
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground2"]
-texture_repeat = 3
-motion_mirroring = Vector2(1920, 1080)
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="ParallaxBackground2/ParallaxLayer2"]
-modulate = Color(1.5, 1.5, 1.5, 1)
-amount = 100
-process_material = SubResource("ParticleProcessMaterial_vv0sl")
-lifetime = 160.0
-preprocess = 160.0
-visibility_rect = Rect2(0, 0, 1920, 1080)
-local_coords = true
+[node name="FloatingParticlesParallax" parent="." instance=ExtResource("10_cbjrp")]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 visible = false
-process_material = SubResource("ParticleProcessMaterial_vv0sl")
+process_material = ExtResource("10_8uswb")

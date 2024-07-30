@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgh4himrrjine"]
+
+[ext_resource type="Material" uid="uid://7aawfom7osge" path="res://Resources/Particles/FloatingParticles.tres" id="1_b3j3l"]
+
+[node name="FloatingParticlesParallax" type="ParallaxBackground"]
+layer = 1
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+texture_repeat = 3
+motion_mirroring = Vector2(1920, 1080)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="ParallaxLayer2"]
+modulate = Color(1.5, 1.5, 1.5, 1)
+amount = 100
+process_material = ExtResource("1_b3j3l")
+lifetime = 160.0
+preprocess = 160.0
+visibility_rect = Rect2(0, 0, 1920, 1080)
+local_coords = true
